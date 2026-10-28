@@ -1,0 +1,9 @@
+{
+  "name": "drive-project-forward",
+  "version": "0.1.0",
+  "description": "연구 프로젝트를 목표 쪽으로 추진한다: 목표와 달성 기준(GOAL.md), 미팅 설명 자료와 미팅 노트, 공유용 발표 자료(wrapup)",
+  "author": {
+    "name": "JuwonHwang"
+  },
+  "license": "MIT"
+}

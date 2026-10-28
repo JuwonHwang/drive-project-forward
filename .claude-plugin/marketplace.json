@@ -1,0 +1,13 @@
+{
+  "name": "drive-project-forward",
+  "owner": {
+    "name": "JuwonHwang"
+  },
+  "description": "연구 프로젝트를 목표 쪽으로 추진하는 Claude Code 플러그인",
+  "plugins": [
+    {
+      "name": "drive-project-forward",
+      "source": "./"
+    }
+  ]
+}
