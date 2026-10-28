@@ -1,49 +1,50 @@
 ---
 name: wrapup
-description: 연구 프로젝트를 다른 사람에게 공유하는 발표 자료를 만든다. GOAL.md의 배경과 목표, 미팅 노트의 결정, 미팅 자료의 결과를 읽어 마크다운 자료를 쓰고, 그것으로 슬라이드까지 만든다. "발표 자료 만들어", "팀에 공유할 자료", "이 프로젝트 소개 자료"처럼 프로젝트 밖의 사람에게 보일 자료가 필요할 때 사용한다. 미팅 자료는 `meet`가 만든다.
+description: Creates presentation material that shares a research project with other people. It reads the background and goal in GOAL.md, the decisions in the meeting notes, and the results in the meeting material, writes a markdown document, and builds slides from it. Use it when material for people outside the project is needed, for example "make a presentation", "material to share with the team", "introduce this project", "발표 자료 만들어", "팀에 공유할 자료", "이 프로젝트 소개 자료". Meeting material is created by `meet`.
 ---
 
-# 발표 자료
+# Presentation material
 
-발표 자료는 이 프로젝트를 모르는 사람에게 왜 이 연구를 하는지, 무엇을 알아냈는지, 무엇이 남았는지를 보이는 자료이다. 미팅 자료(`meet`)와 달리 내부 할 일, 진행 중인 논의, 결정받을 선택지는 넣지 않는다.
+Presentation material shows people who do not know this project why the research is done, what was found, and what remains. Unlike meeting material (`meet`), it does not include internal action items, ongoing discussions, or options awaiting a decision.
 
-## 먼저 묻는 것
+## Ask first
 
-자료를 쓰기 전에 사용자에게 묻는다. 답이 없으면 쓰지 않는다.
+Ask the user the following before writing. Do not write without the answers.
 
-- 듣는 사람: 예: 연구팀, 사업팀, 외부 학회
-- 발표 시간
-- 발표의 목적: 정보 공유, 피드백 요청, 자원이나 승인 요청 중 무엇인가
+- Audience. Examples: research team, business team, external conference
+- Talk length
+- Purpose of the talk: sharing information, requesting feedback, or requesting resources or approval
 
-## 읽는 것
+## Read
 
-1. `GOAL.md`: 배경, 목표, 달성 기준
-2. 미팅 노트 `meetings/*-note.md`의 `정한 것`: 지금의 방법이 어떤 결정으로 정해졌는가
-3. 가장 최근 미팅 자료 `meetings/*-slides.md`: 결과와 그 조건, 출처
+1. `GOAL.md`: background, goal, success criteria
+2. The `Decisions` section of the meeting notes `meetings/*-note.md` (or the section with the same role, if the note is written in another language): which decisions set the current method
+3. The most recent meeting material `meetings/*-slides.md`: results, their conditions, and sources
 
-## 절 순서
+## Section order
 
-| 절 | 내용 |
+| Section | Content |
 |---|---|
-| 배경 | GOAL.md의 배경. 듣는 사람이 겪는 문제와 연결되게 쓴다 |
-| 목표와 달성 기준 | 무엇을 이루려 하고, 무엇을 보이면 달성인가 |
-| 접근 | 방법의 전체 구조도와 핵심 부분의 확대도 |
-| 결과 | 측정된 결과만. 수치마다 조건과 출처 |
-| 한계 | 측정 범위, 아직 확인하지 않은 조건 |
-| 다음 단계 또는 요청 | 발표의 목적에 맞춘다. 요청이 있으면 무엇을 왜 요청하는지 |
+| Background | The background in GOAL.md. Connect it to a problem the audience has |
+| Goal and success criteria | What the project aims to achieve, and what must be shown to reach it |
+| Approach | The full architecture diagram of the method and zoomed-in diagrams of its key parts |
+| Results | Measured results only. Conditions and a source for every number |
+| Limitations | Measurement scope and conditions not yet checked |
+| Next steps or requests | Match the purpose of the talk. If there is a request, state what is requested and why |
 
-듣는 사람에 따라 깊이를 바꾼다. 사업팀이면 접근의 세부보다 배경과 결과가 무엇을 가능하게 하는지에 장을 더 쓴다. 학회면 접근과 결과의 조건을 더 자세히 쓴다.
+Adjust the depth to the audience. For a business team, spend more slides on the background and on what the results make possible than on approach details. For a conference, give more detail on the approach and the conditions of the results.
 
-## 원칙
+## Principles
 
-- **측정한 것보다 크게 주장하지 않는다.** 측정한 조건 밖으로 일반화하지 않는다. 한계 절을 빼지 않는다.
-- **정해지지 않은 것을 정해진 것으로 쓰지 않는다.** 진행 중인 논의는 넣지 않거나 `검토 중`으로 표시한다.
-- **용어를 듣는 사람에 맞춘다.** 프로젝트 안에서만 쓰는 이름(변수명, 조건 이름)은 처음 쓸 때 평이한 말로 설명한다.
-- 슬라이드 규칙은 미팅 자료와 같다: 제목은 구체적인 명사구, 메시지는 본문 첫 줄 한 문장, 논문 수준 구조도, 부분 확대, 한국어·영어 전환.
+- **Attach an example or evidence to every claim.** Follow `Every claim has an example or evidence` in `slides/RULES.md`. This applies to the markdown document as well as the slides.
+- **Do not claim more than was measured.** Do not generalize beyond the measured conditions. Do not drop the limitations section.
+- **Do not present undecided items as decided.** Leave ongoing discussions out, or mark them `under review`.
+- **Match terms to the audience.** Names used only inside the project (variable names, condition names) are explained in plain words the first time they appear.
+- The slide rules are the same as for meeting material: titles are specific noun phrases, the message is one sentence on the first line of the body, architecture diagrams are paper quality, parts are zoomed in, and the slides are in English with a toggle for the user's language when it is not English.
 
-## 저장과 확인
+## Save and confirm
 
-1. 마크다운 자료를 `wrapup/YYYY-MM-DD-<듣는 사람>.md`에 쓴다. 예: `wrapup/2026-11-03-business-team.md`.
-2. 마크다운 자료 전문을 답변에 보이고 확인받는다.
-3. 슬라이드 `wrapup/YYYY-MM-DD-<듣는 사람>.html`을 만든다. 플러그인 폴더의 `slides/RULES.md`(이 스킬 폴더 기준 `../../slides/RULES.md`)를 읽고 그 규칙과 `slides/template.html`로 만든다. 마크다운에 없는 내용을 더하지 않는다.
-4. `slides/RULES.md`의 확인 절차를 실행하고, 슬라이드를 브라우저로 열어 사용자에게 보인다. 커밋은 사용자가 요청할 때만 한다.
+1. Write the markdown document to `wrapup/YYYY-MM-DD-<audience>.md`. Example: `wrapup/2026-11-03-business-team.md`.
+2. Show the full markdown document in the response and get confirmation.
+3. Build the slides `wrapup/YYYY-MM-DD-<audience>.html`. Read `slides/RULES.md` in the plugin folder (`../../slides/RULES.md` relative to this skill folder) and build the slides with its rules and `slides/template-wrapup.html`. Do not add content that is not in the markdown document.
+4. Run the checks in `slides/RULES.md`, open the slides in a browser, and show them to the user. Commit only when the user requests it.

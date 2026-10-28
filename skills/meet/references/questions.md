@@ -1,37 +1,37 @@
-# 관점별 예상 질문
+# Expected questions by perspective
 
-미팅 자료의 `예상 질문`을 만들 때 아래 질문을 하나씩 대조한다. 이번 미팅의 내용과 관련 있는 질문만 슬라이드에 넣고, 준비한 답을 붙인다. 답을 준비하지 못했으면 그렇다고 적는다.
+When writing the `Expected questions` of meeting material, check each question below. Put only the questions related to this meeting's content on the slides, with a prepared answer. If no answer could be prepared, say so.
 
-## 통계·실험 설계
-- 이 수치는 측정값인가, 시뮬레이션 결과인가, 추정값인가. 어느 run 기록에서 나왔는가.
-- 차이가 잡음보다 큰가. seed 간 편차, 같은 설정을 다시 실행할 때의 편차, 표본 수는 얼마인가.
-- 기준값과 하이퍼파라미터를 결과를 보기 전에 정했는가.
-- 비교 조건이 같은가. 모델, 생성 설정, 데이터 분할, budget 계산 방식이 같은가.
-- 근사나 대리 지표를 쓰는가. 그 오차를 확인했는가.
+## Statistics and experiment design
+- Is this number a measured value, a simulation result, or an estimate? Which run record does it come from?
+- Is the difference larger than the noise? What are the variance across seeds, the variance when the same setting is rerun, and the sample size?
+- Were the baseline and hyperparameters fixed before seeing the results?
+- Are the compared conditions the same? Are the model, generation settings, data split, and budget calculation the same?
+- Is an approximation or a proxy metric used? Was its error checked?
 
-## 비용
-- 시간, 토큰, 호출 수, GPU 메모리가 어느 단계에서 발생하고 무엇에 비례하는가.
-- 비교 단위가 맞는가. 정답당 비용, 같은 budget에서의 성능처럼 단위를 밝혔는가.
-- 다음 실험에 드는 GPU 시간과 소요 시간은 얼마인가.
+## Cost
+- At which step do time, tokens, calls, and GPU memory occur, and what are they proportional to?
+- Is the unit of comparison correct? Is the unit stated, such as cost per correct answer or performance at the same budget?
+- How much GPU time and wall-clock time does the next experiment need?
 
-## 선행 연구
-- 같은 문제를 다룬 채택 연구가 있는가. 발표처는 어디인가.
-- 이 방법은 어느 계보에 속하고 무엇을 더하는가. 기존 방법의 변형으로 읽히지 않는가.
-- 리뷰어가 요구할 baseline과 추가 실험은 무엇인가.
-- 사용하는 데이터셋이 주장을 검증하기에 맞는가.
+## Prior work
+- Are there accepted papers on the same problem? Where were they published?
+- Which line of work does this method belong to, and what does it add? Could it be read as a variant of an existing method?
+- Which baselines and additional experiments would a reviewer request?
+- Is the dataset suitable for verifying the claim?
 
-## 현장 적용
-- 방법이 가정하는 조건이 회사나 현장의 실제 업무에서 성립하는가.
-- 회사에서 쓸 수 있는 모델과 자원에서도 성립하는가.
-- 실무자에게 이 연구가 어떤 문제를 해결한다고 말할 수 있는가.
+## Practical application
+- Do the conditions the method assumes hold in real work at the company or in the field?
+- Do they hold with the models and resources available at the company?
+- What problem can this research be said to solve for practitioners?
 
-## 단순성·범위
-- 더 단순한 방법으로 같은 답을 얻을 수 있는가.
-- 빼도 결과가 같은 구성 요소가 있는가.
-- 범위가 지금 답하려는 질문보다 넓어지지 않았는가.
-- 새 실험 없이 기존 기록으로 답할 수 있는가.
+## Simplicity and scope
+- Can a simpler method give the same answer?
+- Is there a component that can be removed without changing the result?
+- Has the scope grown beyond the question being answered now?
+- Can the question be answered from existing records without a new experiment?
 
-## 완성
-- 프로젝트의 목표와 마감은 무엇이고, 남은 시간 안에 끝낼 수 있는가.
-- 진행을 막고 있는 것은 결정 대기, 결과 대기, 자원 부족 중 무엇인가.
-- 이번 미팅에서 정해야 끝으로 갈 수 있는 것은 무엇인가.
+## Completion
+- What are the project's goal and deadline, and can it be finished in the remaining time?
+- Is progress blocked by a pending decision, a pending result, or a lack of resources?
+- What must be decided in this meeting to move toward completion?

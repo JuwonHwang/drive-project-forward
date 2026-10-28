@@ -1,144 +1,166 @@
-# 슬라이드 작성 규칙
+# Slide rules
 
-`meet`와 `wrapup`이 슬라이드를 만들 때 읽는 공용 규칙이다. 템플릿은 같은 폴더의 `template.html`이다.
+Shared rules that `meet`, `wrapup`, and `slides` read when they build slides. The templates are in the same folder: `template.html` for meeting material (`meet`) and slides from a discussion (`slides`), and `template-wrapup.html` for presentation material (`wrapup`).
 
-`template.html`을 복사해서 시작한다. 템플릿은 화면 비율 맞춤, 키보드와 클릭 넘김, 장 번호, 구조도 부분 강조를 구현했다. CSS와 스크립트는 고치지 않고 슬라이드 내용과 구조도만 채운다. 템플릿의 내용(이 플러그인을 설명하는 예시)은 형식을 보이기 위한 예시이므로 모두 바꾼다.
+Start by copying the template for the skill. Both templates have the same CSS and script. The template implements aspect-ratio fitting, keyboard and click navigation, slide numbers, and highlighting parts of a diagram. Do not change its CSS or script; fill in only the slide content and diagrams. The template content (examples describing this plugin) only shows the format, so replace all of it. This includes the `<title>` in `<head>` and the `aria-label` of every SVG. `template-wrapup.html` shows the section order of `wrapup`: questions, background, goal and success criteria, approach, limitations, understanding check.
 
-## 장의 구성
+## Slide structure
 
-한 장은 위에서부터 머리표, 제목, 메시지, 본문 순서이다.
+A slide consists of, from top to bottom, the eyebrow, title, message, and body.
 
-- **머리표(`.eyebrow`)**: 답하는 질문 번호, 절 이름, 절 안의 위치. 예: `질문 1 · 동작 설명 2/2`. 목차 슬라이드는 만들지 않는다.
-- **제목(`.title`)**: 그 장이 다루는 대상을 명사구로 쓴다. 문장으로 쓰지 않는다.
-- **메시지(`.lead`)**: 그 장의 핵심 메시지를 완전한 문장 하나로 쓴다. 한 장에 하나만 둔다. 메시지가 둘이면 장을 나눈다. 예: 결과와 그 결과의 한계는 다른 장에 둔다.
-- **본문**: 불릿, 구조도, 표로만 쓴다. 불릿과 번호 항목은 짧은 라벨로 시작하고, 라벨은 `<strong>`으로 굵게 쓴다. 예: `<strong>질문 1.</strong> …`, `<strong>입력:</strong> …`. 문단을 쓰지 않는다. 본문은 메시지를 뒷받침하는 내용만 담는다.
+- **Eyebrow (`.eyebrow`)**: the number of the question it answers, the section name, and the position within the section. Example: `Q1 · How it works 2/2`. Do not make a table-of-contents slide.
+- **Title (`.title`)**: the subject of the slide as a noun phrase. Do not write it as a sentence.
+- **Message (`.lead`)**: the key message of the slide as one complete sentence. One per slide. If there are two messages, split the slide. Example: a result and the limitation of that result go on different slides.
+- **Body**: bullets, diagrams, and tables only. Bullets and numbered items start with a short label in bold with `<strong>`. Example: `<strong>Q1.</strong> …`, `<strong>Input:</strong> …`. Do not write paragraphs. The body contains only content that supports the message.
 
-## 장이 왜 있는지 자료만 보고 알 수 있게 한다
+## The material alone shows why each slide exists
 
-- 표지 다음에 `이번 미팅의 질문`(발표 자료면 `이 발표의 질문`) 장을 둔다. 질문은 1~3개이고 번호를 붙인다.
-- 그 뒤의 장은 모두 질문 하나에 답한다. 머리표에 질문 번호와 절 이름을 쓴다. 예: `질문 1 · 동작 설명 2/2`.
-- 메시지(`.lead`)는 그 장이 질문에 어떻게 답하는지 쓴다. 질문과 이어지지 않는 장은 넣지 않는다.
-- 마지막에 `이해 확인` 장을 두고, 질문마다 알아야 할 것을 한 문장씩 쓴다.
+- After the cover, put a `Questions for this meeting` slide (`Questions for this talk` for presentation material, `Questions for this material` for `slides`). There are 1 to 3 numbered questions.
+- Every later slide answers one question. Write the question number and section name in the eyebrow. Example: `Q1 · How it works 2/2`.
+- The message (`.lead`) states how the slide answers its question. Do not include slides that are not connected to a question.
+- At the end, put an `Understanding check` slide with one sentence per question on what should be known.
 
-## 긴 문장은 의미 단위로 줄을 바꾼다
+## Break long sentences at units of meaning
 
-메시지나 불릿이 한 줄을 넘으면, 브라우저가 임의의 위치에서 줄을 바꾸게 두지 않는다. 쉼표나 의미가 끊기는 위치에 `<br>`을 넣어 직접 줄을 바꾼다.
+When a message or bullet is longer than one line, do not let the browser break it at an arbitrary position. Insert `<br>` at a comma or where the meaning breaks.
 
-- 한 줄에 의미 단위 하나를 둔다. 예: `미팅 노트가 다음 미팅 자료의 리마인드가 되어 미팅이 한 주기로 이어지고,<br>GOAL.md는 …`
-- 명사구나 조사 앞뒤처럼 의미 단위 안에서는 끊지 않는다.
-- 한국어와 영어는 따로 정한다. 영어 문장도 쉼표, 세미콜론, 절의 경계에서 끊는다.
-- 메시지는 두 줄까지 쓴다. 세 줄이 되면 문장을 줄이거나 장을 나눈다.
-- 줄바꿈 뒤에도 화면 폭을 넘으면 문장을 줄인다. 캡처에서 의도하지 않은 줄바꿈이 없는지 확인한다.
+- Put one unit of meaning per line. Example: `The meeting note becomes the reminder for the next meeting material,<br>and GOAL.md …`
+- Do not break inside a unit of meaning, such as inside a noun phrase.
+- Decide the breaks separately for each language. Break at commas, semicolons, and clause boundaries.
+- A message has at most two lines. If it reaches three lines, shorten the sentence or split the slide.
+- If a line still exceeds the screen width after the break, shorten the sentence. Check the screenshots for unintended line breaks.
 
-## 구체적으로 쓴다
+## Project name
 
-**제목**에는 대상, 측면, 범위를 함께 쓴다. 범위는 데이터셋, 모델, 조건이다. 제목만 보고 무엇의 어떤 측면을 어떤 조건에서 다루는지 알 수 있어야 한다. `결과`, `문제`, `방법`, `개요`, `배경`, `분석`, `비교`, `구조`, `단계 B`처럼 여러 뜻으로 읽히는 말은 단독으로 쓰지 않는다.
+Write the project name in bold wherever it appears in slide text, including the cover, titles, messages, bullets, and captions. Wrap it in `<span class="proj">…</span>`. Inside SVG text, add `font-weight="800"`. The project name is the repository's top-level directory name, unless GOAL.md or the user gives another name.
 
-| 모호한 제목 | 구체적인 제목 |
+## Be specific
+
+A **title** states the subject, the aspect, and the scope. The scope is the dataset, model, and conditions. From the title alone, it must be clear what aspect of what is covered under which conditions. Do not use words with several possible readings on their own, such as `Results`, `Problem`, `Method`, `Overview`, `Background`, `Analysis`, `Comparison`, `Structure`, or `Step B`.
+
+| Vague title | Specific title |
 |---|---|
-| 결과 | CIFAR-10 test 정확도 (ResNet-18, seed 0~2) |
-| 문제 | 학습률 0.1에서 학습이 발산한 run의 비율 (ResNet-18, CIFAR-10) |
-| 구조 | 데이터 증강 파이프라인의 전체 구조 (CIFAR-10 학습 설정) |
-| 판정 규칙 | early stopping의 종료 판정 규칙 (patience 5 epoch, val loss 기준) |
+| Results | CIFAR-10 test accuracy (ResNet-18, seeds 0-2) |
+| Problem | Share of runs that diverged at learning rate 0.1 (ResNet-18, CIFAR-10) |
+| Structure | Full structure of the data augmentation pipeline (CIFAR-10 training setup) |
+| Decision rule | Stopping rule of early stopping (patience 5 epochs, based on val loss) |
 
-**단계와 대상은 하는 일로 부른다.** 스킬, 파일, 함수, 변수 이름은 괄호 안에 보조로 둔다. 예: `seed 3개 반복 실험 (config_b)`, 아님: `config_b 실험`. 한 이름이 서로 다른 단계를 가리키게 하지 않는다.
+**Name steps and subjects by what they do.** Put skill, file, function, and variable names in parentheses as a supplement. Example: `3-seed repeated experiment (config_b)`, not `config_b experiment`. Do not let one name refer to different steps.
 
-**메시지와 불릿**에는 이름, 수치, 조건을 쓴다. `일부`, `대부분`, `개선되었다`, `효과가 있다`처럼 범위나 크기가 없는 말을 쓰지 않는다. 예: `대부분 발산했다` 대신 `run 20개 중 13개(65%)가 발산했다`.
+**Messages and bullets** state names, numbers, and conditions. Do not use words without a range or size, such as `some`, `most`, `improved`, or `effective`. Example: `13 of 20 runs (65%) diverged` instead of `most runs diverged`.
 
-**수치**에는 조건(모델, seed 수, 표본 수)과 출처를 붙인다. 출처는 `.source`에 근거 파일 경로나 논문으로 적는다. 측정하지 않은 값은 추정이라고 적는다.
+**Numbers** carry conditions (model, number of seeds, sample size) and a source. Write the source in `.source` as the path of the evidence file or a paper. Values that were not measured are marked as estimates.
 
-## 구조도는 논문 그림 수준으로 그린다
+## Every claim has an example or evidence
 
-구조를 보이는 그림은 논문의 Figure로 그대로 쓸 수 있을 만큼 상세하게 그린다.
+A claim is a message or bullet that states a fact, a cause, an evaluation, or a comparison. Attach an example or evidence to every claim, on the same slide.
 
-- 모든 구성 요소를 그린다. 상자에는 이름과 하는 일을 쓴다. 번호(①②…)를 붙여 순서를 보인다.
-- 화살표에는 전달되는 데이터를 라벨로 쓴다. 예: `증강된 이미지 배치`, `epoch별 val loss`.
-- 판정 조건과 분기를 쓴다. 예: `val loss가 5 epoch 동안 줄지 않았나?`, `예: 학습 종료`, `아니오: 다음 epoch`.
-- 반복 경로, 종료 조건, 반환값을 쓴다.
-- 비용이나 크기를 나타내는 수치를 쓴다. 예: `GPU 시간 2시간`, `val 이미지 5,000장`.
-- 상자의 위치는 데이터가 이동하는 순서를 따른다. 선이 서로 교차하지 않게 배치한다.
+- **Evidence:** a run record, a log excerpt, a result file, a measured number, a diagram of the actual structure, a quoted line from a document or code, or a paper. Write where it comes from in `.source` (file path, run path, example id, paper).
+- **Example:** one concrete case that shows the claim. Take it from actual records when they exist. A made-up scenario that can generally occur may also be used; mark it `illustrative` and do not present it as a record or a measurement.
+- A document that only states the claim, such as a README sentence, is the source of the claim, not its evidence. Write it as the source and attach evidence separately.
+- If no example or evidence can be found, do not write the claim, or mark it `no evidence` and put it in `Not yet explained` (`Limitations` for presentation material).
+- Do not attach evidence that shows something else. The evidence must show the claim under the conditions stated in the claim.
 
-구조도는 `<template id="diagram-이름">`에 한 번만 정의한다. 각 구성 요소의 `<g>`에 `data-part="이름"`을 붙인다. 두 부분을 잇는 화살표와 라벨에는 양쪽 이름을 공백으로 함께 적는다(`data-part="gate val"`). 같은 구조는 모든 장에서 같은 그림을 쓴다.
+## Draw architecture diagrams at paper quality
 
-## 특정 부분은 확대해서 그린다
+A diagram that shows a structure is detailed enough to be used as a figure in a paper.
 
-전체 구조의 한 부분을 설명하는 장은 그 부분을 확대한 상세도를 새로 그린다. 전체 구조도에서 해당 부분만 진하게 하는 것으로 끝내지 않는다.
+- Draw every component. Each box has a name and what it does. Number the boxes (①②…) to show the order.
+- Label each arrow with the data it carries. Example: `augmented image batch`, `val loss per epoch`.
+- Write decision conditions and branches. Example: `Has val loss not decreased for 5 epochs?`, `Yes: stop training`, `No: next epoch`.
+- Write loops, stop conditions, and return values.
+- Write numbers for cost or size. Example: `2 GPU hours`, `5,000 val images`.
+- Place the boxes in the order the data moves. Arrange them so lines do not cross.
 
-- **확대 상세도**(왼쪽, 넓게): 그 부분의 내부 단계, 입력과 출력, 판정 규칙을 예시 값과 함께 그린다. 예: epoch별 val loss, 최저값 대비 증가 여부, 종료 판정 결과. 상세도도 `<template id="diagram-이름-detail">`로 정의한다.
-- **위치 표시**(오른쪽, 작게): 전체 구조도를 `data-focus="부분 이름"`으로 불러온다. 해당 부분만 진하게 남고 나머지는 반투명하게 가려진다. 아래에 `전체 학습 루프에서 종료 판정(④)의 위치`처럼 캡션을 단다.
-- 구성은 `.zoom` 안에 `.figure`(상세도)와 `.side`(`.locator`와 짧은 불릿)이다. 템플릿의 5번째 장이 예시이다.
-- 전체 구조를 처음 보이는 장에서는 전체 구조도를 화면 너비로 그린다. 부분 설명 장은 구조의 순서를 따른다.
+Give each diagram's `<svg>` an `aria-label` that states what the diagram shows, in English. Example: `aria-label="Full training loop: data loading, augmentation, training step, stop decision"`. Screen readers read this text in place of the figure. Do not put the plugin name or the author in it.
 
-## 한국어와 영어
+Define each diagram once in `<template id="diagram-name">`. Put `data-part="name"` on the `<g>` of each component. On an arrow or label that connects two parts, write both names separated by a space (`data-part="gate val"`). The same structure uses the same diagram on every slide.
 
-모든 글자를 한국어와 영어로 함께 쓴다. 화면에는 선택한 언어만 보인다.
+## Zoom in on specific parts
 
-- HTML 글자는 `<span lang="ko">…</span><span lang="en">…</span>`를 나란히 둔다. 제목, 메시지, 불릿, 표 머리, 캡션, 출처 모두 해당한다.
-- SVG 글자는 같은 좌표에 `<text lang="ko">`와 `<text lang="en">`을 하나씩 둔다. 두 언어에서 같은 글자(`ResNet-18`, `x₁`, 수치)는 `lang` 없이 하나만 둔다.
-- 영어는 한국어를 옮긴 것이어야 한다. 한쪽에만 있는 내용을 두지 않는다.
-- 영어가 더 길어 상자를 넘으면 줄을 나눈다. 두 언어 모두 캡처해 확인한다.
-- 전환: 왼쪽 아래 버튼이나 `L` 키. 주소에 `?lang=en`을 붙이면 영어로 열린다. 마지막 선택은 브라우저에 저장된다.
+A slide that explains one part of the full structure draws a new detailed diagram zoomed in on that part. Do not stop at making only that part dark in the full diagram.
 
-## 색의 의미
+- **Zoomed-in detail** (left, wide): the internal steps, inputs and outputs, and decision rules of that part, with example values. Example: val loss per epoch, whether it increased from the minimum, the stop decision. The detail is also defined with `<template id="diagram-name-detail">`.
+- **Position marker** (right, small): load the full diagram with `data-focus="part name"`. Only that part stays dark and the rest is made translucent. Add a caption below, such as `Position of the stop decision (④) in the full training loop`.
+- The layout is `.figure` (detail) and `.side` (`.locator` and short bullets) inside `.zoom`. The 5th slide of the template is an example.
+- The slide that first shows the full structure draws the full diagram at screen width. Slides that explain parts follow the order of the structure.
 
-색은 뜻이 있을 때만 쓴다. 장식이나 강조를 위해 색을 쓰지 않는다. 그 밖의 텍스트는 검정이다.
+## Language
 
-| 색 | 클래스 | 뜻 |
+Write all text in English. If the user's language is not English, also write every text in the user's language and add a language toggle. The user's language is the language the user writes in during the conversation.
+
+- English only: remove `data-alt` from `<html>` and give text no `lang` attribute. The toggle button is hidden.
+- With the user's language: set `data-alt` on `<html>` to its language code. Example: `<html lang="en" data-lang="en" data-alt="ko">`. The template is an example with `data-alt="ko"`.
+- HTML text puts `<span lang="en">…</span><span lang="<code>">…</span>` side by side. This applies to titles, messages, bullets, table headers, captions, and sources.
+- SVG text puts one `<text lang="en">` and one `<text lang="<code>">` at the same coordinates. Text that is the same in both languages (`ResNet-18`, `x₁`, numbers) is written once without `lang`.
+- The two languages are translations of each other. Do not put content in only one of them.
+- If the longer language overflows a box, split the line. Capture screenshots in both languages to check.
+- Switching: the button at the bottom left or the `L` key. Adding `?lang=<code>` to the address opens that language. The last choice is saved in the browser.
+
+## Color meanings
+
+Use color only when it has a meaning. Do not use color for decoration or emphasis. All other text is black.
+
+| Color | Class | Meaning |
 |---|---|---|
-| 하늘색 `#0284c7` | `new` | 이번 자료에서 처음 보는 개념이나 결과. 지난 미팅 자료에서 설명한 적 없는 것 |
-| 빨간색 `#dc2626` | `crit` | 중요한 것. 이번 자료에서 반드시 기억해야 하는 사실이나 조건 |
-| 보라 `#6d28d9`, 초록 `#15803d`, 황토 `#a16207`, 회청 `#475569` | `c1`~`c4` | 뜻 없음. 텍스트와 그 텍스트가 가리키는 시각 자료를 연결한다 |
+| Sky blue `#0284c7` | `new` | A concept or result shown for the first time in this material. Not explained in previous meeting material |
+| Red `#dc2626` | `crit` | Important. A fact or condition that must be remembered from this material |
+| Purple `#6d28d9`, green `#15803d`, ochre `#a16207`, slate `#475569` | `c1`-`c4` | No meaning. Links text to the visual it refers to |
 
-- **같은 대상은 같은 색이다.** 텍스트가 구조도 상자, 그래프 계열, 표 칸을 가리키면, 텍스트와 그 시각 자료를 같은 색으로 칠한다. 한 자료 안에서 같은 대상은 모든 장에서 같은 색을 쓴다.
-- **new와 crit도 이 규칙을 따른다.** 처음 보는 개념이 구조도 상자이기도 하면 그 상자도 하늘색이다. 중요한 사실이 그림의 특정 부분을 가리키면 그 부분도 빨간색이다.
-- 색을 쓴 텍스트는 모두 굵게 표시한다. HTML 텍스트와 SVG 글자 모두 해당하며, 템플릿의 색 클래스가 굵기를 함께 정한다. 메시지 줄은 기본 굵기를 낮게(500) 두어 색을 쓴 단어(800)가 구분되게 한다.
-- 연결 색(`c1`~`c4`)은 한 장에서 4개까지 쓴다. 더 필요하면 장을 나눈다.
-- 텍스트는 `<span class="new">`, `<span class="crit">`, `<span class="c1">`로 칠한다. 구조도 상자는 `<g data-part="…" class="c1">`처럼 그룹에 같은 클래스를 붙인다. 그러면 상자의 테두리와 이름이 그 색이 되고, 내부는 같은 색의 연한 색으로 채워진다. 색이 없는 상자는 흰색으로 채운다. SVG 글자와 칸은 `class="… crit"`처럼 붙인다.
-- 색을 칠한 텍스트는 한 장에 몇 단어로 제한한다. 문장 전체를 칠하는 것은 crit 한 문장까지이다.
+- **The same subject has the same color.** When text refers to a diagram box, a chart series, or a table cell, the text and that visual get the same color. Within one piece of material, the same subject uses the same color on every slide.
+- **new and crit follow this rule too.** If a concept shown for the first time is also a diagram box, that box is sky blue. If an important fact refers to a specific part of a figure, that part is red.
+- All colored text is bold. This applies to both HTML text and SVG text, and the template's color classes set the weight. The message line has a lower default weight (500) so colored words (800) stand out.
+- Use at most 4 link colors (`c1`-`c4`) per slide. If more are needed, split the slide.
+- Color text with `<span class="new">`, `<span class="crit">`, `<span class="c1">`. For a diagram box, put the same class on the group, as in `<g data-part="…" class="c1">`. The box border and name then get that color, and the inside is filled with a light tint of it. Boxes without a color are filled white. For SVG text and cells, add the class as in `class="… crit"`.
+- Limit colored text to a few words per slide. Coloring a whole sentence is allowed only for one crit sentence.
 
-## 시각 자료의 배경
+## Background of visuals
 
-구조도, 표, 그래프는 연한 회색 배경(`--panel`, `#f8f9fa`) 위에 둔다. 템플릿의 `.figure`와 `.locator`가 이 배경을 이미 갖는다. 색이 없는 구조도 상자는 흰색으로, 색이 있는 상자는 그 색의 연한 색으로 채워 배경과 구분한다.
+Diagrams, tables, and charts sit on a light gray background (`--panel`, `#f8f9fa`). The template's `.figure` and `.locator` already have this background. Diagram boxes without a color are filled white, and boxes with a color are filled with a light tint of it, to separate them from the background.
 
-## 넘치면 장을 나눈다
+## Split slides that overflow
 
-화면에 스크롤이 없다. 내용이 많으면 글자를 줄이지 않고 장을 나눈다. 스타일은 템플릿 그대로 둔다. 슬라이드 배경은 흰색이고, 색은 `색의 의미`에 해당할 때만 쓴다. 장식과 그림자를 추가하지 않는다.
+The screen has no scrolling. If there is too much content, split the slide instead of shrinking the text. Keep the template styles as they are. The slide background is white, and color is used only as described in `Color meanings`. Do not add decorations or shadows.
 
-## 구성 요소
+## Components
 
-| 담을 내용 | 쓸 것 |
+| Content | Use |
 |---|---|
-| 장의 대상 | `h2.title` (명사구) |
-| 핵심 메시지 | `p.lead` (문장 하나) |
-| 근거 나열 | `ul.points` (3~5개, 한 줄씩) |
-| 전체 구조 | `<template id="diagram-이름">` + `.figure[data-diagram]` |
-| 부분 설명 | `.zoom` = 상세도 `.figure[data-diagram="이름-detail"]` + `.side` 안 `.locator[data-focus]` |
-| 수치 비교 | `table`. 숫자 칸은 `td.num`. 칸을 칠할 때는 `색의 의미`의 클래스를 쓴다 |
-| 출처 | `.source` |
-| 표지 | `section.slide.cover` |
+| Subject of the slide | `h2.title` (noun phrase) |
+| Key message | `p.lead` (one sentence) |
+| List of evidence | `ul.points` (3 to 5 items, one line each) |
+| Full structure | `<template id="diagram-name">` + `.figure[data-diagram]` |
+| Part explanation | `.zoom` = detail `.figure[data-diagram="name-detail"]` + `.locator[data-focus]` inside `.side` |
+| Number comparison | `table`. Number cells are `td.num`. To color a cell, use the classes in `Color meanings` |
+| Table with two-line cells | `table.small` |
+| Source | `.source` |
+| Cover | `section.slide.cover` |
+| Project name | `span.proj` |
 
-## 확인
+## Checks
 
-만든 뒤 다음을 확인한다.
+After building, check the following.
 
 ```bash
-f=<파일>
-grep -c '<section class="slide' "$f"              # 장 수
-grep -c 'class="title"' "$f"                        # 장 수와 같아야 한다
-grep -c 'class="lead"' "$f"                         # 표지를 뺀 장 수와 같아야 한다
-grep -o '<h2 class="title">[^<]*' "$f"              # 제목이 명사구이고 대상·측면·범위가 있는지 본다
-grep -o 'data-diagram="[^"]*"' "$f" | sort -u       # 쓴 구조도
-grep -o 'id="diagram-[^"]*"' "$f" | sort -u         # 정의한 구조도
-grep -c 'lang="ko"' "$f"; grep -c 'lang="en"' "$f"  # 두 수가 같아야 한다(html 태그 제외)
+f=<file>
+grep -c '<section class="slide' "$f"              # number of slides
+grep -c 'class="title"' "$f"                        # must equal the number of slides
+grep -c 'class="lead"' "$f"                         # must equal the number of slides minus the cover
+grep -o '<h2 class="title">[^<]*' "$f"              # check that titles are noun phrases with subject, aspect, and scope
+grep -o 'data-diagram="[^"]*"' "$f" | sort -u       # diagrams used
+grep -o 'id="diagram-[^"]*"' "$f" | sort -u         # diagrams defined
+grep -c 'lang="en"' "$f"; grep -c 'lang="<code>"' "$f"  # with data-alt: equal, excluding the <html> tag
+grep -o '<title>[^<]*' "$f"                          # title of this material, not the template's
+grep -o 'aria-label="[^"]*"' "$f"                    # each states what its diagram shows
 ```
 
-브라우저를 쓸 수 있으면 헤드리스로 장마다 화면을 캡처해 잘림, 겹침, 글자 크기를 본다. 캡처는 작업 폴더 안에 저장한다.
+If a browser is available, capture each slide headlessly and check for clipping, overlap, and text size. Save the screenshots inside the working folder.
 
 ```bash
 "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless --hide-scrollbars \
   --window-size=1600,900 --screenshot="$PWD/preview/slide-3-en.png" "file://$PWD/$f?lang=en#3"
 ```
 
-## 저장
+## Saving
 
-사용자가 정한 경로에 단일 HTML 파일로 저장한다. 외부 파일에 의존하지 않는다.
+Save as a single HTML file at the path the user chose. It does not depend on external files.

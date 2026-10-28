@@ -1,56 +1,61 @@
 ---
 name: goal
-description: 연구 저장소에 GOAL.md를 처음 만든다. 이 연구가 생긴 동기, 목표, 목표를 달성했다고 판단하는 기준, 일정을 담는다. "목표 문서 만들어", "GOAL.md 만들어", "이 연구 관리 시작하자"처럼 관리를 시작할 때 사용한다. GOAL.md가 이미 있으면 쓰지 않는다.
+description: Creates GOAL.md in a research repository for the first time. It records why the research started, the goal, the criteria for judging that the goal is reached, and the schedule. Use it when starting to manage a project, for example "create the goal document", "create GOAL.md", "start managing this research", "목표 문서 만들어", "GOAL.md 만들어", "이 연구 관리 시작하자". Do not use it when GOAL.md already exists.
 ---
 
-# GOAL.md 시작
+# Starting GOAL.md
 
-GOAL.md는 왜 이 연구를 하는지와, 목표를 달성했다는 것이 무엇인지 정하는 문서이다. 프로젝트를 다른 사람에게 공유할 때도 이 문서를 먼저 보인다. 저장소 최상위에 둔다. 이 스킬은 처음 한 번만 쓴다. 이후 GOAL.md는 `meet`가 미팅 뒤에, 사용자가 목표 자체를 조정했을 때만 고친다.
+GOAL.md is the document that states why this research is done and what it means to reach the goal. When the project is shared with other people, this document is shown first. It is placed at the repository root. This skill is used only once, at the start. After that, `meet` edits GOAL.md after a meeting, and only when the user changed the goal itself.
 
-## 목표와 구현의 관계
+## Goal and implementation
 
-- 목표가 위에 있고 구현은 목표를 위해 존재한다. 프로젝트가 무엇을 하는지는 코드에 드러나므로 GOAL.md에 쓰지 않는다.
-- 배경과 목표는 사용자가 그것 자체를 조정하기로 정했을 때만 바뀐다. 방법, 구현, 실험 설계를 바꾸는 결정은 GOAL.md를 바꾸지 않는다.
-- 미팅 자료는 진행 상황을 달성 기준에 비추어 보고한다.
+- The goal comes first, and the implementation exists to serve the goal. What the project does is visible in the code, so it is not written in GOAL.md.
+- The background and goal change only when the user decides to adjust them. Decisions that change the method, implementation, or experiment design do not change GOAL.md.
+- Meeting material reports progress against the success criteria.
 
-## 섹션
+## Language
+
+Write GOAL.md in the user's language by default. The user's language is the language the user writes in during the conversation. If the user requests a specific language, write it in that language. Section names in the template below are given in English; write them in the language of the document. Markers such as `TBD` are also written in that language.
+
+## Sections
 
 ```markdown
-# <목표를 한 문장으로 담은 제목>
+# <Title that states the goal in one sentence>
 
-## 배경
-왜 이 프로젝트와 목표가 생겼는가. 어떤 문제를 겪었거나 보았는지, 기존 방법이나
-현장에서 무엇이 부족했는지. 처음 보는 사람이 이 목표가 왜 필요한지 납득할 수 있게 쓴다.
+## Background
+Why this project and its goal exist. What problem was experienced or observed, and what
+existing methods or practice lacked. Write it so that a first-time reader understands why
+this goal is needed.
 
-## 목표
-이 연구로 이루려는 것. 한두 문장.
+## Goal
+What this research aims to achieve. One or two sentences.
 
-## 달성 기준
-목표를 달성했다고 판단하는 조건. 항목마다 확인할 수 있게 쓴다:
-무엇을, 어떤 조건에서, 어느 수준까지 보이면 달성인가.
-예: "CIFAR-10에서 ResNet-18의 test 정확도를 기준 학습과 같게(차이 0.5점 이내, seed 3개 평균)
-유지하면서 학습 시간을 30% 줄인다."
+## Success criteria
+The conditions under which the goal is judged to be reached. Write each item so it can be
+checked: what is shown, under which conditions, and to which level.
+Example: "Reduce training time by 30% while keeping the test accuracy of ResNet-18 on
+CIFAR-10 equal to the baseline training (within 0.5 points, mean over 3 seeds)."
 
-## 일정
-사용자가 정한 마감과 중간 시점. 정하지 않았으면 `미정`.
+## Schedule
+Deadlines and intermediate dates set by the user. If none were set, `TBD`.
 ```
 
-## 원칙
+## Principles
 
-- **배경, 목표, 달성 기준은 사용자의 판단이다.** 코드나 실험 결과에서 추론해 채우지 않는다. 문서에 없으면 사용자에게 묻는다.
-- **달성 기준은 확인할 수 있게 쓴다.** `성능 개선`, `실용성 확인`처럼 달성 여부를 판단할 수 없는 말을 쓰지 않는다. 사용자가 수준을 정하지 않았으면 그 자리를 `미정`으로 두고 미팅에서 정하도록 남긴다.
-- **구현, 실험 결과, 코드 설명을 쓰지 않는다.**
-- **현재 목표만 쓴다.** "이전 목표는 ~였다"를 쓰지 않는다. 이력은 git과 미팅 노트가 보관한다.
+- **The background, goal, and success criteria are the user's judgment.** Do not infer them from the code or experiment results. If they are not in the documents, ask the user.
+- **Write success criteria so they can be checked.** Do not use phrases such as `improve performance` or `confirm practicality`, which do not allow judging whether the goal is reached. If the user has not set a level, write `TBD` in its place and leave it to be decided in a meeting.
+- **Do not write implementation details, experiment results, or code descriptions.**
+- **Write only the current goal.** Do not write "the previous goal was ...". Git and the meeting notes keep the history.
 
-## 절차
+## Procedure
 
-1. 읽는다: README와 설계 문서에서 동기, 목표, 달성 기준이 적힌 부분, 기존 미팅 노트. 소스 코드는 읽지 않는다.
-2. 사용자에게 묻는다. 문서에 적혀 있어도 확인한다.
-   - 왜 이 연구를 시작했는가
-   - 이 연구로 무엇을 이루려는가
-   - 무엇을 보이면 달성했다고 판단하는가
-   - 마감이 있는가
-3. 초안을 쓴다. 사용자의 답을 사용자가 말한 순서와 논지대로 반영한다.
-4. 초안 전문을 답변에 그대로 보인다. "초안을 만들었다", 요약, 파일 경로만 알리는 것으로 대신하지 않는다.
-5. 사용자가 저장하라고 하면 저장하고 `meetings/` 디렉터리를 만든다. 고칠 점을 말하면 고친 전문을 다시 보인다.
-6. 기존 문서는 지우거나 고치지 않는다. 커밋은 사용자가 요청할 때만 한다.
+1. Read the parts of the README and design documents that state the motivation, goal, and success criteria, and any existing meeting notes. Do not read the source code.
+2. Ask the user the following, even if the documents already state it.
+   - Why did this research start?
+   - What does this research aim to achieve?
+   - What must be shown to judge that the goal is reached?
+   - Is there a deadline?
+3. Write a draft. Reflect the user's answers in the order and with the arguments the user gave.
+4. Show the full draft in the response. Do not replace it with "a draft was created", a summary, or only a file path.
+5. When the user says to save it, save it and create the `meetings/` directory. When the user gives corrections, apply them and show the full text again.
+6. Do not delete or edit existing documents. Commit only when the user requests it.

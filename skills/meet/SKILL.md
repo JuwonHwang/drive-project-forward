@@ -1,110 +1,114 @@
 ---
 name: meet
-description: 연구 미팅 하나의 앞뒤를 맡는다. 미팅 전에는 사용자가 방법이 어떻게 동작하고 결과가 왜 그렇게 나왔는지 이해하도록 설명 자료(마크다운과 슬라이드)를 만들고, 미팅 뒤에는 미팅 노트를 쓰고 사용자가 목표 자체를 조정했으면 GOAL.md를 고친다. "미팅 자료 만들어", "미팅 준비해", "설명 자료 만들어", "미팅 정리해", "회의록 써", "미팅 끝났다"에 사용한다.
+description: Handles the before and after of one research meeting. Before the meeting, it creates explanatory material (markdown and slides) so the user understands how the method works and why the results came out as they did. After the meeting, it writes the meeting note and edits GOAL.md if the user adjusted the goal itself. Use it for "prepare the meeting material", "prepare for the meeting", "summarize the meeting", "write the meeting notes", "the meeting is over", "미팅 자료 만들어", "미팅 준비해", "설명 자료 만들어", "미팅 정리해", "회의록 써", "미팅 끝났다".
 ---
 
-# 미팅 (meet)
+# Meeting (meet)
 
-이 스킬은 미팅 하나의 앞뒤를 맡는다. 미팅 전에는 설명 자료를 만들고(1부), 미팅이 끝나면 미팅 노트를 쓴다(2부).
+This skill handles the before and after of one meeting. Before the meeting it creates explanatory material (Part 1), and after the meeting it writes the meeting note (Part 2).
 
-# 1부. 미팅 전: 설명 자료
+# Part 1. Before the meeting: explanatory material
 
-이 미팅의 목적은 사용자가 이해하는 것이다. 무엇을 했는지 보고하는 것보다, 방법이 어떻게 동작하고 결과가 왜 그렇게 나왔는지를 단계를 따라 설명하는 데 무게를 둔다.
+The purpose of this meeting is for the user to understand. Rather than reporting what was done, the material explains step by step how the method works and why the results came out as they did.
 
-자료는 두 가지를 만든다.
+Create two pieces of material.
 
-1. **마크다운 자료** `meetings/YYYY-MM-DD-slides.md`: 미팅 내용의 원본이다. 아래 절 순서대로 쓴다.
-2. **슬라이드** `meetings/YYYY-MM-DD-slides.html`: 마크다운 자료를 미팅에서 보이는 형태로 그린 것이다. 내용을 더하거나 빼지 않는다. 플러그인 폴더의 `slides/RULES.md`(이 스킬 폴더 기준 `../../slides/RULES.md`)를 읽고 그 규칙과 `slides/template.html`로 만든다.
+1. **Markdown material** `meetings/YYYY-MM-DD-slides.md`: the source of the meeting content. Write it in the section order below.
+2. **Slides** `meetings/YYYY-MM-DD-slides.html`: the markdown material drawn in the form shown in the meeting. Do not add or remove content. Read `slides/RULES.md` in the plugin folder (`../../slides/RULES.md` relative to this skill folder) and build the slides with its rules and `slides/template.html`.
 
-## 이 자료는 결정하지 않는다
+## This material does not decide
 
-- 결론을 내리지 않는다. 원인과 해석은 후보로 제시하고 각 후보의 근거를 붙인다.
-- 결정하지 않는다. 결정받을 것은 선택지와 장단점으로 보인다. 권하는 선택지가 있으면 이유와 함께 `권장`으로 표시하되, 정해진 것처럼 쓰지 않는다.
-- 설명 자료를 만드는 동안에는 GOAL.md와 미팅 노트를 고치지 않는다. 그것은 미팅이 끝난 뒤 2부에서 한다.
+- It does not draw conclusions. Causes and interpretations are presented as candidates, each with its evidence.
+- It does not make decisions. Items to be decided are shown as options with pros and cons. If an option is recommended, mark it `recommended` with the reason, but do not write it as if it were decided.
+- While creating the explanatory material, do not edit GOAL.md or the meeting notes. That is done in Part 2 after the meeting.
 
-## 읽는 것
+## Read
 
-1. `GOAL.md`: 배경, 목표, 달성 기준, 일정
-2. 가장 최근 미팅 노트 `meetings/YYYY-MM-DD-note.md`: 정한 것, 할 일, 보류한 질문. 없으면 첫 미팅이다
-3. 지난 미팅 자료 `meetings/*-slides.md`: 이미 설명한 개념을 확인한다
-4. 그 회의 날짜 이후의 `git log` 제목과 본문, run 기록과 결과 파일. 예시는 이 기록에서 가져온다
+1. `GOAL.md`: background, goal, success criteria, schedule
+2. The most recent meeting note `meetings/YYYY-MM-DD-note.md`: decisions, action items, deferred questions. If there is none, this is the first meeting
+3. Previous meeting material `meetings/*-slides.md`: to check which concepts were already explained
+4. The `git log` subjects and bodies since that meeting date, and run records and result files. Examples are taken from these records
 
-## 절 순서
+## Section order
 
-| 절 | 내용 |
+| Section | Content |
 |---|---|
-| 이번 미팅의 질문 | 이번 자료가 설명하려는 질문 1~3개. 예: "학습률 0.1에서 run의 65%가 발산하는 이유는 무엇인가" |
-| 지난 미팅 리마인드 | 한 장. 지난 할 일마다 상태(완료, 진행 중, 하지 못함과 이유)와, 달성 기준 항목마다 위치(충족, 미충족과 현재 수준, 아직 측정하지 않음). 첫 미팅이면 GOAL.md의 목표와 달성 기준 |
-| 동작 설명 | 전체 구조도를 보이고, 질문과 관련된 부분을 확대한다. 그다음 실제 run 기록에서 예시 하나를 골라 처음부터 끝까지 따라간다. 단계마다 입력, 처리, 출력이 무엇이었는지 보인다 |
-| 결과와 원인 | 결과마다 원인 후보와, 그 원인을 보여주는 기록(어떤 예시, 어떤 로그의 어느 부분)을 함께 보인다. 수치에는 조건과 출처를 붙이고 측정값과 추정값을 구분한다 |
-| 아직 설명하지 못한 것 | 원인을 찾지 못한 현상과, 찾으려면 무엇을 봐야 하는가 |
-| 이해 확인 | 이번 미팅이 끝날 때 알아야 할 것을 몇 문장으로 쓴다. 사용자가 자기 이해와 맞는지 확인하는 장이다 |
-| 결정받을 것, 다음 계획 | 있을 때만. 결정 하나에 한 장, 선택지와 장단점. 다음 계획은 선택지별로 |
+| Questions for this meeting | 1 to 3 questions this material explains. Example: "Why do 65% of runs diverge at learning rate 0.1?" |
+| Reminder of the last meeting | One slide. For each previous action item, its status (done, in progress, not done with the reason). For each success criterion, its position (met, not met with the current level, not yet measured). For the first meeting, the goal and success criteria in GOAL.md |
+| How it works | Show the full architecture diagram and zoom in on the parts related to the questions. Then pick one example from an actual run record and follow it from start to end. For each step, show the input, processing, and output |
+| Results and causes | For each result, show the candidate causes and the records that show each cause (which example, which part of which log). Attach conditions and sources to numbers, and distinguish measured values from estimates |
+| Not yet explained | Phenomena whose cause was not found, and what to look at to find it |
+| Understanding check | A few sentences stating what the user should know at the end of this meeting. This slide lets the user check that it matches their understanding |
+| Decisions needed, next plan | Only when there are any. One slide per decision, with options and pros and cons. The next plan is given per option |
 
-절 이름은 머리표에 쓴다. 예: `동작 설명 2/4`.
+Write the section name in the eyebrow. Example: `How it works 2/4`.
 
-## 설명 방식
+## How to explain
 
-- **설명 여부는 이 프로젝트에서 이미 설명했는가로 정한다.** 학위 수준이나 "일반 용어"를 기준으로 건너뛰지 않는다. 지난 미팅 자료(`meetings/*-slides.md`)가 이미 설명한 개념의 목록이다.
-  - 지난 자료에서 설명한 개념은 한 줄로 상기시킨다.
-  - 설명한 적 없는 개념은 일반 용어라도 설명한다: 한 줄 정의, 이 방법에서 맡는 역할, 실제 기록의 예시 하나. 예: "Label smoothing: 정답 클래스에 주던 목표 확률의 일부를 다른 클래스에 나눠 준 목표 분포이다. 이 실험에서는 모델이 정답을 과신하는 것을 줄이려고 쓴다."
-  - 교과서식 정의만 쓰지 않는다. 이 방법 안에서 무엇을 하는지가 핵심이다.
-- **새 개념과 새 결과에 장을 쓴다.** 이미 설명한 것을 다시 길게 설명하지 않는다.
-- **기호는 정의하고, 뒤에서 다시 쓸 때도 뜻을 함께 적는다.** 예: `k(후보 수)`. 기호 없이 쓸 수 있으면 기호를 쓰지 않는다.
-- **단계를 번호로만 부르지 않는다.** `③` 대신 `데이터 증강(③)`처럼 이름으로 부른다.
-- **예시는 실제 기록에서 가져온다.** 출처(run 경로, 예시 id)를 붙인다. 지어낸 예시를 쓸 때는 `예시용`이라고 표시한다.
-- **원인을 하나로 단정하지 않는다.** 기록이 보여주는 것과 추정을 구분한다.
+- **Whether to explain a concept depends on whether it was already explained in this project.** Do not skip a concept because it is at graduate level or a "common term". The previous meeting material (`meetings/*-slides.md`) is the list of concepts already explained.
+  - Concepts explained in previous material are recalled in one line.
+  - Concepts never explained are explained even if they are common terms: a one-line definition, the role it plays in this method, and one example from actual records. Example: "Label smoothing: a target distribution that moves part of the target probability from the correct class to the other classes. In this experiment it is used to reduce the model's overconfidence in the correct answer."
+  - Do not write only a textbook definition. What it does inside this method is the point.
+- **Spend slides on new concepts and new results.** Do not explain again at length what was already explained.
+- **Define symbols, and state their meaning again when they are reused later.** Example: `k (number of candidates)`. If something can be written without a symbol, do not use a symbol.
+- **Do not refer to steps by number only.** Write `data augmentation (③)` instead of `③`.
+- **Take examples from actual records.** Attach the source (run path, example id). When a made-up example is used, mark it `illustrative`.
+- **Attach an example or evidence to every claim.** Follow `Every claim has an example or evidence` in `slides/RULES.md`. This applies to the markdown material as well as the slides.
+- **Do not assert a single cause.** Distinguish what the records show from estimates.
 
-## 빠뜨리지 않는 것
+## Do not omit
 
-- 지난 미팅 노트의 할 일 중 리마인드에서 빠진 것이 없다.
-- 모든 수치에 조건과 출처가 있다. 출처를 찾지 못한 수치는 쓰지 않거나 `출처 미확인`으로 표시한다.
-- 문서끼리 수치가 다르면 숨기지 않고 `아직 설명하지 못한 것`에 둘 다 보인다.
-- `결과와 원인`을 쓴 뒤 `references/questions.md`의 관점별 질문과 대조해, 이번 결과에 대해 놓친 질문이 있으면 `아직 설명하지 못한 것`에 넣는다.
+- No action item from the previous meeting note is missing from the reminder.
+- Every number has conditions and a source. A number whose source could not be found is not written, or is marked `source unconfirmed`.
+- If numbers differ between documents, do not hide it; show both in `Not yet explained`.
+- After writing `Results and causes`, check it against the questions by perspective in `references/questions.md`. If a question about these results was missed, put it in `Not yet explained`.
 
-## 미팅 전 저장과 확인
+## Saving and confirming before the meeting
 
-1. 마크다운 자료를 `meetings/YYYY-MM-DD-slides.md`에 쓴다. 날짜는 미팅 날짜이다.
-2. 마크다운 자료로 슬라이드 `meetings/YYYY-MM-DD-slides.html`을 만든다. 마크다운의 절 하나가 슬라이드 몇 장이 된다.
-3. `slides/RULES.md`의 확인 절차를 실행한다. 두 언어 모두 캡처해 잘림을 본다.
-4. 슬라이드를 브라우저로 열어 사용자에게 보인다. 커밋은 사용자가 요청할 때만 한다.
+1. Write the markdown material to `meetings/YYYY-MM-DD-slides.md`. The date is the meeting date.
+2. Build the slides `meetings/YYYY-MM-DD-slides.html` from the markdown material. One section of the markdown becomes several slides.
+3. Run the checks in `slides/RULES.md`. If the slides have a second language, capture screenshots in both languages and check for clipping.
+4. Open the slides in a browser and show them to the user. Commit only when the user requests it.
 
-# 2부. 미팅 뒤: 미팅 노트
+# Part 2. After the meeting: meeting note
 
-미팅이 끝나면 두 가지를 한다. 미팅 노트를 쓰고, 사용자가 목표 자체를 조정했으면 GOAL.md를 고친다.
+After the meeting, do two things. Write the meeting note, and edit GOAL.md if the user adjusted the goal itself.
 
-## 미팅 노트
+## Meeting note
 
-`meetings/YYYY-MM-DD-note.md`에 쓴다. 날짜는 미팅 날짜이고 미팅 자료(`YYYY-MM-DD-slides.md`)와 같은 날짜이다. 세 섹션만 둔다.
+Write the meeting note in the user's language by default. The user's language is the language the user writes in during the conversation. If the user requests a specific language, write it in that language. Section names in the template below are given in English; write them in the language of the note. If a previous meeting note exists, use the same section names as that note.
+
+Write it to `meetings/YYYY-MM-DD-note.md`. The date is the meeting date, the same date as the meeting material (`YYYY-MM-DD-slides.md`). It has only three sections.
 
 ```markdown
-# 미팅 YYYY-MM-DD
+# Meeting YYYY-MM-DD
 
-## 정한 것
-- 사용자가 정한 것. 한 항목에 한 문장. 정한 이유를 사용자가 말했으면 함께 적는다.
+## Decisions
+- What the user decided. One sentence per item. If the user gave a reason, write it too.
 
-## 할 일
-- 할 일. 갈래(하위 질문)가 있으면 갈래 이름을 앞에 붙인다. 다음 미팅 자료의 리마인드가 이 목록을 그대로 대조한다.
+## Action items
+- Action items. If there are branches (sub-questions), put the branch name first. The reminder in the next meeting material checks this list item by item.
 
-## 보류한 질문
-- 이번에 정하지 않고 미룬 질문.
+## Deferred questions
+- Questions that were postponed without a decision this time.
 ```
 
-- 정한 것은 사용자가 말한 것만 쓴다. 미팅 중 Claude가 제안했지만 사용자가 정하지 않은 것은 `보류한 질문`에 둔다.
-- 할 일은 다음 미팅에서 완료 여부를 판단할 수 있게 구체적으로 쓴다. 예: `실험 더 해보기` 대신 `CIFAR-100에서 seed 1, 2 run 추가`.
-- 요약이나 논의 경과를 쓰지 않는다.
+- Write as decisions only what the user said. Anything Claude proposed during the meeting that the user did not decide goes in `Deferred questions`.
+- Write action items specifically enough that the next meeting can judge whether they are done. Example: `add seed 1 and 2 runs on CIFAR-100` instead of `run more experiments`.
+- Do not write a summary or the course of the discussion.
 
 ## GOAL.md
 
-GOAL.md는 사용자가 배경, 목표, 달성 기준, 일정 자체를 조정하기로 정했을 때만 고친다. 방법, 구현, 실험 설계를 바꾸기로 한 결정은 GOAL.md를 바꾸지 않는다. 그런 결정은 미팅 노트의 `정한 것`에만 남는다.
+Edit GOAL.md only when the user decided to adjust the background, goal, success criteria, or schedule themselves. Decisions to change the method, implementation, or experiment design do not change GOAL.md. Such decisions are recorded only in the `Decisions` section of the meeting note.
 
-고칠 때:
-- 바뀐 문장을 교체한다. 섹션 끝에 새 문단을 붙이지 않는다.
-- "이전 목표는 ~였다", "YYYY-MM-DD 미팅에서 바꿨다"를 쓰지 않는다. 경과는 미팅 노트와 git이 보관한다.
+When editing:
+- Write in the language GOAL.md is already written in, unless the user requests another language.
+- Replace the changed sentence. Do not append a new paragraph at the end of a section.
+- Do not write "the previous goal was ..." or "changed in the YYYY-MM-DD meeting". The meeting notes and git keep the history.
 
-## 미팅 뒤 절차
+## Procedure after the meeting
 
-1. 미팅 대화에서 사용자가 정한 것, 할 일, 보류한 질문을 뽑는다. 미팅 노트 전문을 답변에 그대로 보이고 확인받는다. 요약이나 파일 경로만 알리는 것으로 대신하지 않는다.
-2. 사용자가 확인하면 미팅 노트를 저장한다.
-3. GOAL.md를 고칠 것이 있으면 변경안을 섹션마다 바꾸기 전 문장과 바꾼 뒤 문장으로 답변에 보인다. 사용자가 확인하면 저장한다.
-4. 커밋은 사용자가 요청할 때만 한다.
+1. From the meeting conversation, extract what the user decided, the action items, and the deferred questions. Show the full meeting note in the response and get confirmation. Do not replace it with a summary or only a file path.
+2. When the user confirms, save the meeting note.
+3. If GOAL.md needs editing, show the proposed change for each section as the sentence before and the sentence after. When the user confirms, save it.
+4. Commit only when the user requests it.

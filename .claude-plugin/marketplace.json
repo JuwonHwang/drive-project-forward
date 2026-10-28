@@ -3,7 +3,7 @@
   "owner": {
     "name": "JuwonHwang"
   },
-  "description": "연구 프로젝트를 목표 쪽으로 추진하는 Claude Code 플러그인",
+  "description": "A Claude Code plugin that keeps a research project directed at its goal",
   "plugins": [
     {
       "name": "drive-project-forward",

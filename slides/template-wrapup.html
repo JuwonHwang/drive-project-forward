@@ -1,0 +1,507 @@
+<!doctype html>
+<!-- data-alt: the user's language code when it is not English (e.g. "ko"). Remove it for English-only slides;
+     the toggle button is then hidden. -->
+<html lang="en" data-lang="en" data-alt="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>drive-project-forward introduction</title>
+<style>
+:root{--bg:#fff;--fg:#1b1b1b;--muted:#6b6b6b;--line:#d6d6d6;--panel:#f8f9fa;
+  /* Color meanings: new (shown for the first time), crit (important), c1-c4 (links text to visuals, no meaning) */
+  --new:#0284c7;--crit:#dc2626;--c1:#6d28d9;--c2:#15803d;--c3:#a16207;--c4:#475569}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);word-break:keep-all;
+  font-family:"Pretendard","Apple SD Gothic Neo","Noto Sans KR",system-ui,sans-serif}
+/* Language switching: the script hides elements whose lang is not the selected language */
+.deck{position:fixed;inset:0;display:grid;place-items:center}
+.slide{display:none;container-type:size;box-sizing:border-box;
+  width:min(100vw,177.78vh);height:min(56.25vw,100vh);padding:4.5cqh 5cqw 5.5cqh;flex-direction:column;gap:2.8cqh}
+.slide.on{display:flex}
+.eyebrow{font-size:1.35cqw;color:var(--muted);letter-spacing:.02em}
+.title{font-size:2.4cqw;font-weight:700;line-height:1.3;margin:0}
+.lead{font-size:2.1cqw;font-weight:500;line-height:1.45;margin:0;padding-left:1.2cqw;border-left:.35cqw solid #9ca3af}
+.cover .title{font-size:3.6cqw;margin-top:auto}
+.cover .sub{font-size:1.8cqw;color:var(--muted);margin-bottom:auto}
+ul.points{font-size:2cqw;line-height:1.5;margin:0;padding-left:1.3em}
+ul.points li+li{margin-top:1.2cqh}
+ul.points li::marker{color:var(--muted)}
+ul.points.small{font-size:1.6cqw}
+/* Bold labels at the start of bullets and numbered items */
+ul.points li strong,ol li strong{font-weight:700}
+.figure{flex:1;min-height:0;display:flex;align-items:center;justify-content:center;
+  background:var(--panel);border-radius:8px;padding:2cqh 2cqw;box-sizing:border-box}
+.figure svg{width:100%;height:100%}
+/* Part description: zoomed-in detail on the left, its position in the full structure on the right */
+.zoom{flex:1;min-height:0;display:grid;grid-template-columns:1fr 34%;gap:3cqw}
+.side{display:flex;flex-direction:column;gap:2cqh;min-height:0}
+.locator{background:var(--panel);border-radius:8px;padding:1cqw}
+.locator svg{width:100%;height:auto;display:block}
+.caption{font-size:1.2cqw;color:var(--muted);margin-top:.8cqh}
+table{border-collapse:collapse;font-size:1.9cqw}
+table.small{font-size:1.45cqw}
+th,td{border-bottom:1px solid var(--line);padding:1.3cqh 2cqw;text-align:left}
+th{font-weight:600;color:var(--muted)}
+td.num{text-align:right;font-variant-numeric:tabular-nums}
+/* Text colors: meaningful colors (new, crit) and link colors (c1-c4) */
+span.new,span.crit,span.c1,span.c2,span.c3,span.c4,td.new,td.crit,td.c1,td.c2,td.c3,td.c4{font-weight:800}
+/* Project name: bold wherever it appears in slide text */
+span.proj{font-weight:800}
+.new{color:var(--new)} .crit{color:var(--crit)}
+.c1{color:var(--c1)} .c2{color:var(--c2)} .c3{color:var(--c3)} .c4{color:var(--c4)}
+.source{margin-top:auto;font-size:1.15cqw;color:var(--muted)}
+/* Step-by-step explanation: parts not in data-focus are made translucent */
+[data-part]{transition:opacity .25s}
+.dim{opacity:.14}
+svg text{font-family:inherit;fill:var(--fg)}
+svg .name{font-weight:700}
+svg .sub,svg .label{fill:var(--muted)}
+svg .box{fill:#fff;stroke:var(--fg);stroke-width:2}
+/* Visual colors: a group with the same color class as its text gets that color on the box border and name, and a light tint inside */
+svg g.new .box{stroke:var(--new);fill:#e0f2fe} svg g.new .name{fill:var(--new)}
+svg g.crit .box{stroke:var(--crit);fill:#fee2e2} svg g.crit .name{fill:var(--crit)}
+svg g.c1 .box{stroke:var(--c1);fill:#ede9fe} svg g.c1 .name{fill:var(--c1)}
+svg g.c2 .box{stroke:var(--c2);fill:#dcfce7} svg g.c2 .name{fill:var(--c2)}
+svg g.c3 .box{stroke:var(--c3);fill:#fef3c7} svg g.c3 .name{fill:var(--c3)}
+svg g.c4 .box{stroke:var(--c4);fill:#e2e8f0} svg g.c4 .name{fill:var(--c4)}
+svg text.new{fill:var(--new)} svg text.crit{fill:var(--crit)}
+svg text.new,svg text.crit,svg text.c1,svg text.c2,svg text.c3,svg text.c4{font-weight:700}
+svg text.c1{fill:var(--c1)} svg text.c2{fill:var(--c2)} svg text.c3{fill:var(--c3)} svg text.c4{fill:var(--c4)}
+svg .cell1.new{fill:var(--new)} svg .cell1.crit{fill:var(--crit)}
+svg .edge{stroke:var(--fg);stroke-width:2;fill:none;marker-end:url(#arrow)}
+svg .cell1{fill:#4b5563}
+svg .cell0{fill:#fff;stroke:var(--fg);stroke-width:2}
+svg .edge.opt{stroke-dasharray:8 6}
+.counter{position:fixed;right:1.2vw;bottom:1vh;font-size:12px;color:var(--muted)}
+.langbtn{position:fixed;left:1.2vw;bottom:.8vh;font:inherit;font-size:12px;color:var(--muted);
+  background:#fff;border:1px solid var(--line);border-radius:4px;padding:2px 8px;cursor:pointer}
+</style>
+</head>
+<body>
+
+<!-- Arrowhead. Placed outside the slides because it is not drawn inside a hidden slide. -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+    <path d="M0,0 L10,5 L0,10 z" fill="#1b1b1b"/></marker></defs>
+</svg>
+
+<!-- Full architecture diagram. Defined once and loaded with data-diagram. Each part has data-part.
+     SVG text: one lang="en" <text> and, when data-alt is set, one <text> in that language at the same position. -->
+<template id="diagram-cycle">
+  <svg viewBox="0 0 1600 720" role="img" aria-label="Full meeting cycle: set goal, GOAL.md, prepare material, meeting, write note, meeting note, presentation, slides from a discussion">
+    <g data-part="goal">
+      <rect class="box" x="20" y="70" width="220" height="140" rx="10"/>
+      <text lang="ko" class="name" x="130" y="112" text-anchor="middle" font-size="22">① 목표 작성 <tspan class="sub" font-size="16" font-weight="400">(goal)</tspan></text>
+      <text lang="en" class="name" x="130" y="112" text-anchor="middle" font-size="22">① Set goal <tspan class="sub" font-size="16" font-weight="400">(goal)</tspan></text>
+      <text lang="ko" class="sub" x="130" y="148" text-anchor="middle" font-size="17">사용자에게 묻고</text>
+      <text lang="en" class="sub" x="130" y="148" text-anchor="middle" font-size="17">asks the user,</text>
+      <text lang="ko" class="sub" x="130" y="172" text-anchor="middle" font-size="17">처음 한 번 작성</text>
+      <text lang="en" class="sub" x="130" y="172" text-anchor="middle" font-size="17">writes once</text>
+    </g>
+    <path class="edge" data-part="goal goalmd" d="M240,140 L298,140"/>
+
+    <g data-part="goalmd" class="c1">
+      <rect class="box" x="300" y="70" width="240" height="140" rx="10"/>
+      <text class="name" x="420" y="112" text-anchor="middle" font-size="22">GOAL.md</text>
+      <text lang="ko" class="sub" x="420" y="148" text-anchor="middle" font-size="17">배경, 목표,</text>
+      <text lang="en" class="sub" x="420" y="148" text-anchor="middle" font-size="17">background, goal,</text>
+      <text lang="ko" class="sub" x="420" y="172" text-anchor="middle" font-size="17">달성 기준, 일정</text>
+      <text lang="en" class="sub" x="420" y="172" text-anchor="middle" font-size="17">success criteria, schedule</text>
+    </g>
+    <path class="edge" data-part="goalmd walk" d="M540,140 L638,140"/>
+    <text lang="ko" class="label" data-part="goalmd walk" x="589" y="128" text-anchor="middle" font-size="16">달성 기준</text>
+    <text lang="en" class="label" data-part="goalmd walk" x="589" y="128" text-anchor="middle" font-size="16">criteria</text>
+
+    <g data-part="walk">
+      <rect class="box" x="640" y="70" width="280" height="140" rx="10"/>
+      <text lang="ko" class="name" x="780" y="112" text-anchor="middle" font-size="22">② 자료 준비 <tspan class="sub" font-size="16" font-weight="400">(meet)</tspan></text>
+      <text lang="en" class="name" x="780" y="112" text-anchor="middle" font-size="22">② Prepare material <tspan class="sub" font-size="16" font-weight="400">(meet)</tspan></text>
+      <text lang="ko" class="sub" x="780" y="148" text-anchor="middle" font-size="17">GOAL.md, 미팅 노트, git log,</text>
+      <text lang="en" class="sub" x="780" y="148" text-anchor="middle" font-size="17">reads GOAL.md, notes,</text>
+      <text lang="ko" class="sub" x="780" y="172" text-anchor="middle" font-size="17">run 기록을 읽고 설명 자료 작성</text>
+      <text lang="en" class="sub" x="780" y="172" text-anchor="middle" font-size="17">git log, runs; writes the material</text>
+    </g>
+    <path class="edge" data-part="walk meeting" d="M920,140 L1038,140"/>
+    <text class="label" data-part="walk meeting" x="979" y="128" text-anchor="middle" font-size="16">.md → .html</text>
+
+    <g data-part="meeting">
+      <rect class="box" x="1040" y="70" width="240" height="140" rx="10"/>
+      <text lang="ko" class="name" x="1160" y="112" text-anchor="middle" font-size="22">③ 미팅</text>
+      <text lang="en" class="name" x="1160" y="112" text-anchor="middle" font-size="22">③ Meeting</text>
+      <text lang="ko" class="sub" x="1160" y="148" text-anchor="middle" font-size="17">사용자가 자료를 보고</text>
+      <text lang="en" class="sub" x="1160" y="148" text-anchor="middle" font-size="17">the user reads the slides</text>
+      <text lang="ko" class="sub" x="1160" y="172" text-anchor="middle" font-size="17">이해하고 결정</text>
+      <text lang="en" class="sub" x="1160" y="172" text-anchor="middle" font-size="17">and decides</text>
+    </g>
+    <path class="edge" data-part="meeting after" d="M1160,210 L1160,328"/>
+    <text lang="ko" class="label" data-part="meeting after" x="1174" y="274" font-size="16">사용자가 정한 것</text>
+    <text lang="en" class="label" data-part="meeting after" x="1174" y="274" font-size="16">what the user decided</text>
+
+    <g data-part="after">
+      <rect class="box" x="1040" y="330" width="240" height="140" rx="10"/>
+      <text lang="ko" class="name" x="1160" y="372" text-anchor="middle" font-size="22">④ 노트 작성 <tspan class="sub" font-size="16" font-weight="400">(meet)</tspan></text>
+      <text lang="en" class="name" x="1160" y="372" text-anchor="middle" font-size="22">④ Write note <tspan class="sub" font-size="16" font-weight="400">(meet)</tspan></text>
+      <text lang="ko" class="sub" x="1160" y="408" text-anchor="middle" font-size="17">미팅 노트 작성,</text>
+      <text lang="en" class="sub" x="1160" y="408" text-anchor="middle" font-size="17">writes the note;</text>
+      <text lang="ko" class="sub" x="1160" y="432" text-anchor="middle" font-size="17">GOAL.md는 조건부 수정</text>
+      <text lang="en" class="sub" x="1160" y="432" text-anchor="middle" font-size="17">edits GOAL.md only if needed</text>
+    </g>
+    <path class="edge" data-part="after note" d="M1040,400 L922,400"/>
+    <path class="edge opt" data-part="after goalmd" d="M1280,400 L1560,400 L1560,30 L420,30 L420,68"/>
+    <text lang="ko" class="label" data-part="after goalmd" x="990" y="56" text-anchor="middle" font-size="16">사용자가 목표 자체를 조정할 때만</text>
+    <text lang="en" class="label" data-part="after goalmd" x="990" y="56" text-anchor="middle" font-size="16">only when the user adjusts the goal itself</text>
+
+    <g data-part="note" class="c2">
+      <rect class="box" x="640" y="330" width="280" height="140" rx="10"/>
+      <text class="name" x="780" y="372" text-anchor="middle" font-size="22">note.md</text>
+      <text lang="ko" class="sub" x="780" y="408" text-anchor="middle" font-size="17">정한 것, 할 일,</text>
+      <text lang="en" class="sub" x="780" y="408" text-anchor="middle" font-size="17">decisions, action items,</text>
+      <text lang="ko" class="sub" x="780" y="432" text-anchor="middle" font-size="17">보류한 질문</text>
+      <text lang="en" class="sub" x="780" y="432" text-anchor="middle" font-size="17">deferred questions</text>
+    </g>
+    <path class="edge" data-part="note walk" d="M780,330 L780,212"/>
+    <text lang="ko" class="label" data-part="note walk" x="794" y="276" font-size="16">다음 미팅의 리마인드</text>
+    <text lang="en" class="label" data-part="note walk" x="794" y="276" font-size="16">next meeting's reminder</text>
+
+    <g data-part="wrapup">
+      <rect class="box" x="20" y="330" width="220" height="140" rx="10"/>
+      <text lang="ko" class="name" x="130" y="372" text-anchor="middle" font-size="22">⑤ 발표 자료 <tspan class="sub" font-size="16" font-weight="400">(wrapup)</tspan></text>
+      <text lang="en" class="name" x="130" y="372" text-anchor="middle" font-size="19">⑤ Presentation <tspan class="sub" font-size="14" font-weight="400">(wrapup)</tspan></text>
+      <text lang="ko" class="sub" x="130" y="408" text-anchor="middle" font-size="17">프로젝트 밖의 사람에게</text>
+      <text lang="en" class="sub" x="130" y="408" text-anchor="middle" font-size="17">presentation for</text>
+      <text lang="ko" class="sub" x="130" y="432" text-anchor="middle" font-size="17">보일 발표 자료</text>
+      <text lang="en" class="sub" x="130" y="432" text-anchor="middle" font-size="17">people outside</text>
+    </g>
+    <path class="edge" data-part="goalmd wrapup" d="M360,210 L360,400 L242,400"/>
+    <text lang="ko" class="label" data-part="goalmd wrapup" x="374" y="300" font-size="16">배경, 목표</text>
+    <text lang="en" class="label" data-part="goalmd wrapup" x="374" y="300" font-size="16">background, goal</text>
+
+    <g data-part="slides">
+      <rect class="box" x="20" y="520" width="220" height="140" rx="10"/>
+      <text lang="ko" class="name" x="130" y="562" text-anchor="middle" font-size="22">⑥ 논의 슬라이드 <tspan class="sub" font-size="16" font-weight="400">(slides)</tspan></text>
+      <text lang="en" class="name" x="130" y="562" text-anchor="middle" font-size="19">⑥ Discussion <tspan class="sub" font-size="14" font-weight="400">(slides)</tspan></text>
+      <text lang="ko" class="sub" x="130" y="598" text-anchor="middle" font-size="17">현재 대화를 읽고</text>
+      <text lang="en" class="sub" x="130" y="598" text-anchor="middle" font-size="17">reads the conversation,</text>
+      <text lang="ko" class="sub" x="130" y="622" text-anchor="middle" font-size="17">슬라이드 작성</text>
+      <text lang="en" class="sub" x="130" y="622" text-anchor="middle" font-size="17">writes slides</text>
+    </g>
+    <text lang="ko" class="label" data-part="slides" x="256" y="596" font-size="16">미팅 주기와 연결되지 않음</text>
+    <text lang="en" class="label" data-part="slides" x="256" y="596" font-size="16">not connected to the cycle</text>
+
+    <g data-part="legend">
+      <line x1="640" y1="592" x2="700" y2="592" stroke="#1b1b1b" stroke-width="2"/>
+      <text lang="ko" class="sub" x="712" y="598" font-size="17">미팅마다</text>
+      <text lang="en" class="sub" x="712" y="598" font-size="17">every meeting</text>
+      <line x1="900" y1="592" x2="960" y2="592" stroke="#1b1b1b" stroke-width="2" stroke-dasharray="8 6"/>
+      <text lang="ko" class="sub" x="972" y="598" font-size="17">조건이 맞을 때만</text>
+      <text lang="en" class="sub" x="972" y="598" font-size="17">only when the condition holds</text>
+    </g>
+  </svg>
+</template>
+
+<!-- Zoomed-in detail: where each kind of meeting outcome is recorded after the meeting (④) -->
+<template id="diagram-after-detail">
+  <svg viewBox="0 0 1000 520" role="img" aria-label="Where each kind of meeting outcome is recorded in the meeting note and GOAL.md">
+    <text lang="ko" class="label" x="20" y="50" font-size="19">미팅에서 나온 것</text>
+    <text lang="en" class="label" x="20" y="50" font-size="19">What came out of the meeting</text>
+    <text class="label c2" x="640" y="50" text-anchor="middle" font-size="19">note.md</text>
+    <text class="label c1" x="860" y="50" text-anchor="middle" font-size="19">GOAL.md</text>
+
+    <text lang="ko" class="name" x="20" y="122" font-size="21">목표·달성 기준·일정 자체를 조정</text>
+    <text lang="en" class="name" x="20" y="122" font-size="21">Goal, criteria or schedule adjusted</text>
+    <text lang="ko" class="sub" x="20" y="150" font-size="16">예: 달성 기준을 seed 3개에서 5개로</text>
+    <text lang="en" class="sub" x="20" y="150" font-size="16">e.g. criterion moves from 3 seeds to 5</text>
+    <rect class="cell1" x="614" y="96" width="52" height="52" rx="4"/>
+    <text lang="ko" class="sub" x="640" y="176" text-anchor="middle" font-size="15">정한 것</text>
+    <text lang="en" class="sub" x="640" y="176" text-anchor="middle" font-size="15">decisions</text>
+    <rect class="cell1 crit" x="834" y="96" width="52" height="52" rx="4"/>
+    <text lang="ko" class="sub crit" x="860" y="176" text-anchor="middle" font-size="15">문장 교체</text>
+    <text lang="en" class="sub crit" x="860" y="176" text-anchor="middle" font-size="15">sentence replaced</text>
+
+    <line x1="20" y1="200" x2="980" y2="200" stroke="#d6d6d6"/>
+
+    <text lang="ko" class="name" x="20" y="262" font-size="21">방법·구현·실험 설계를 변경</text>
+    <text lang="en" class="name" x="20" y="262" font-size="21">Method, code or experiment changed</text>
+    <text lang="ko" class="sub" x="20" y="290" font-size="16">예: 평가 지표를 바꾸기로 함</text>
+    <text lang="en" class="sub" x="20" y="290" font-size="16">e.g. switch the evaluation metric</text>
+    <rect class="cell1" x="614" y="236" width="52" height="52" rx="4"/>
+    <text lang="ko" class="sub" x="640" y="316" text-anchor="middle" font-size="15">정한 것</text>
+    <text lang="en" class="sub" x="640" y="316" text-anchor="middle" font-size="15">decisions</text>
+    <rect class="cell0" x="834" y="236" width="52" height="52" rx="4"/>
+    <text lang="ko" class="sub" x="860" y="316" text-anchor="middle" font-size="15">그대로</text>
+    <text lang="en" class="sub" x="860" y="316" text-anchor="middle" font-size="15">unchanged</text>
+
+    <line x1="20" y1="340" x2="980" y2="340" stroke="#d6d6d6"/>
+
+    <text lang="ko" class="name" x="20" y="402" font-size="21">Claude가 제안했지만 사용자가 정하지 않음</text>
+    <text lang="en" class="name" x="20" y="402" font-size="21">Proposed by Claude, not decided</text>
+    <rect class="cell1" x="614" y="376" width="52" height="52" rx="4"/>
+    <text lang="ko" class="sub" x="640" y="456" text-anchor="middle" font-size="15">보류한 질문</text>
+    <text lang="en" class="sub" x="640" y="456" text-anchor="middle" font-size="15">deferred</text>
+    <rect class="cell0" x="834" y="376" width="52" height="52" rx="4"/>
+    <text lang="ko" class="sub" x="860" y="456" text-anchor="middle" font-size="15">그대로</text>
+    <text lang="en" class="sub" x="860" y="456" text-anchor="middle" font-size="15">unchanged</text>
+
+    <rect class="cell1" x="20" y="486" width="22" height="22" rx="3"/>
+    <text lang="ko" class="sub" x="52" y="503" font-size="15">기록함</text>
+    <text lang="en" class="sub" x="52" y="503" font-size="15">written</text>
+    <rect class="cell0" x="160" y="486" width="22" height="22" rx="3"/>
+    <text lang="ko" class="sub" x="192" y="503" font-size="15">기록하지 않음</text>
+    <text lang="en" class="sub" x="192" y="503" font-size="15">not written</text>
+  </svg>
+</template>
+
+<main class="deck">
+
+<section class="slide cover">
+  <div class="title">
+    <span lang="ko"><span class="proj">drive-project-forward</span>: 연구 미팅을 진행하는 Claude Code 플러그인</span>
+    <span lang="en"><span class="proj">drive-project-forward</span>: a Claude Code plugin for running research meetings</span>
+  </div>
+  <div class="sub">
+    <span lang="ko">플러그인 사용자 대상 소개 · 10분 · 템플릿 예시 · 2026-10-29</span>
+    <span lang="en">Introduction for plugin users · 10 min · Template example · 2026-10-29</span>
+  </div>
+</section>
+
+<section class="slide">
+  <div class="eyebrow"><span lang="ko">이 발표의 질문</span><span lang="en">Questions for this talk</span></div>
+  <h2 class="title">
+    <span lang="ko"><span class="proj">drive-project-forward</span>가 다루는 문제, 스킬 4개의 파일 흐름, 검증하지 않은 항목</span>
+    <span lang="en">Problem addressed, file flow of the 4 skills, and unverified items in <span class="proj">drive-project-forward</span></span>
+  </h2>
+  <p class="lead">
+    <span lang="ko">이 발표는 플러그인을 설치해 쓸지 판단하는 데 필요한 세 질문에 답한다.</span>
+    <span lang="en">This talk answers three questions needed to decide whether to install the plugin.</span>
+  </p>
+  <ul class="points">
+    <li><span lang="ko"><strong>질문 1.</strong> Claude Code로 하는 연구 세션의 어떤 문제를 다루는가</span><span lang="en"><strong>Q1.</strong> What problem in research sessions with Claude Code does it address?</span></li>
+    <li><span lang="ko"><strong>질문 2.</strong> 스킬 4개는 어떤 순서로 어떤 파일을 읽고 쓰는가</span><span lang="en"><strong>Q2.</strong> Which files do the four skills read and write, and in what order?</span></li>
+    <li><span lang="ko"><strong>질문 3.</strong> 아직 검증하지 않은 것은 무엇인가</span><span lang="en"><strong>Q3.</strong> What has not been verified yet?</span></li>
+  </ul>
+</section>
+
+<section class="slide">
+  <div class="eyebrow"><span lang="ko">질문 1 · 배경</span><span lang="en">Q1 · Background</span></div>
+  <h2 class="title">
+    <span lang="ko">한 세션에서 연구 논의를 이어갈 때 생기는 세 가지 문제 (Claude Code)</span>
+    <span lang="en">Three problems when research discussion continues within one Claude Code session</span>
+  </h2>
+  <p class="lead">
+    <span lang="ko">한 세션에서 연구 논의를 이어가면 세부 내용으로 빠지고, 결론을 서두르고,<br>문서에 이전 결정이 덧붙여져 나열이 된다.</span>
+    <span lang="en">When research discussion continues within one session, it drifts into details, reaches conclusions too early,<br>and documents turn into lists of earlier decisions.</span>
+  </p>
+  <div class="figure">
+    <table class="small">
+      <tr>
+        <th><span lang="ko">문제</span><span lang="en">Problem</span></th>
+        <th><span lang="ko">한 세션의 예시 (illustrative, 지어낸 사례)</span><span lang="en">Example from one session (illustrative, made up)</span></th>
+      </tr>
+      <tr>
+        <td><strong><span lang="ko">세부로 빠짐</span><span lang="en">Drift</span></strong></td>
+        <td><span lang="ko">3번째 턴 사용자: "test 정확도가 왜 2점 떨어졌나?"<br>4~15번째 턴: data loader worker 수와 진행 표시줄 형식을 논의. 정확도 하락은 다시 다루지 않음</span><span lang="en">Turn 3, user: "Why did test accuracy drop by 2 points?"<br>Turns 4-15: data loader worker count and progress bar format. The drop is not discussed again</span></td>
+      </tr>
+      <tr>
+        <td><strong><span lang="ko">이른 결론</span><span lang="en">Early conclusions</span></strong></td>
+        <td><span lang="ko">16번째 턴 Claude: "label smoothing이 하락의 원인이다."<br>근거: seed 0 run 1개</span><span lang="en">Turn 16, Claude: "Label smoothing caused the drop."<br>Basis: one run, seed 0</span></td>
+      </tr>
+      <tr>
+        <td><strong><span lang="ko">덧붙는 문서</span><span lang="en">Appended documents</span></strong></td>
+        <td><span lang="ko">30번째 턴의 notes.md: "결정: lr 0.1" / "결정: lr 0.05" / "결정: warmup과 함께 lr 0.1".<br>어느 것이 현재 결정인지 적혀 있지 않음</span><span lang="en">notes.md at turn 30: "Decided: lr 0.1" / "Decided: lr 0.05" / "Decided: lr 0.1 with warmup".<br>Which one is current is not stated</span></td>
+      </tr>
+    </table>
+  </div>
+  <div class="source"><span lang="ko">주장의 출처: README.md. 예시는 illustrative이며 실제 세션 기록이 아니다</span><span lang="en">Source of the claim: README.md. The example is illustrative, not an actual session record</span></div>
+</section>
+
+<section class="slide">
+  <div class="eyebrow"><span lang="ko">질문 1 · 목표와 달성 기준</span><span lang="en">Q1 · Goal and success criteria</span></div>
+  <h2 class="title">
+    <span lang="ko"><span class="proj">drive-project-forward</span>의 목표와 미팅 단위 작업 순서</span>
+    <span lang="en">Goal of <span class="proj">drive-project-forward</span> and its order of work per meeting</span>
+  </h2>
+  <p class="lead">
+    <span lang="ko">목표를 <span class="c1">GOAL.md</span> 하나에 두고,<br>미팅마다 이해, 결정, 기록의 순서를 고정한다.</span>
+    <span lang="en">The goal is kept in one document, <span class="c1">GOAL.md</span>,<br>and each meeting follows the fixed order: understand, decide, record.</span>
+  </p>
+  <ul class="points small">
+    <li><span lang="ko"><strong>목표:</strong> "<span class="c1">GOAL.md</span>는 … 저장소 최상위에 둔다"</span><span lang="en"><strong>Goal:</strong> "<span class="c1">GOAL.md</span> … is placed at the repository root"</span></li>
+    <li><span lang="ko"><strong>이해:</strong> "이 미팅의 목적은 사용자가 이해하는 것이다"</span><span lang="en"><strong>Understand:</strong> "The purpose of this meeting is for the user to understand"</span></li>
+    <li><span lang="ko"><strong>결정:</strong> "결정하지 않는다. 결정받을 것은 선택지와 장단점으로 보인다"</span><span lang="en"><strong>Decide:</strong> "It does not make decisions. Items to be decided are shown as options with pros and cons"</span></li>
+    <li><span lang="ko"><strong>기록:</strong> "미팅이 끝나면 … <span class="c2">미팅 노트</span>를 쓰고, 사용자가 목표 자체를 조정했으면 GOAL.md를 고친다"</span><span lang="en"><strong>Record:</strong> "After the meeting … Write the <span class="c2">meeting note</span>, and edit GOAL.md if the user adjusted the goal itself"</span></li>
+    <li><span lang="ko"><strong>달성 기준:</strong> 기록되지 않음. 이 저장소에는 GOAL.md가 없다</span><span lang="en"><strong>Success criteria:</strong> not recorded. This repository has no GOAL.md</span></li>
+  </ul>
+  <div class="source"><span lang="ko">인용: skills/goal/SKILL.md 8행, skills/meet/SKILL.md 12·22·75행 (한국어는 번역)</span><span lang="en">Quoted from skills/goal/SKILL.md line 8, skills/meet/SKILL.md lines 12, 22, 75</span></div>
+</section>
+
+<section class="slide">
+  <div class="eyebrow"><span lang="ko">질문 2 · 접근 1/4</span><span lang="en">Q2 · Approach 1/4</span></div>
+  <h2 class="title">
+    <span lang="ko"><span class="proj">drive-project-forward</span>의 미팅 주기 전체 구조 (스킬 4개, 기록 파일 2개)</span>
+    <span lang="en">Full meeting cycle of <span class="proj">drive-project-forward</span> (4 skills, 2 record files)</span>
+  </h2>
+  <p class="lead">
+    <span lang="ko"><span class="c1">GOAL.md</span>는 처음 한 번 쓰고,<br><span class="c2">미팅 노트</span>는 다음 미팅 자료의 리마인드가 된다.</span>
+    <span lang="en"><span class="c1">GOAL.md</span> is written once,<br>and each <span class="c2">meeting note</span> becomes the reminder of the next meeting material.</span>
+  </p>
+  <div class="figure" data-diagram="cycle"></div>
+  <div class="source"><span lang="ko">출처: README.md, skills/*/SKILL.md</span><span lang="en">Source: README.md, skills/*/SKILL.md</span></div>
+</section>
+
+<section class="slide">
+  <div class="eyebrow"><span lang="ko">질문 2 · 접근 2/4</span><span lang="en">Q2 · Approach 2/4</span></div>
+  <h2 class="title">
+    <span lang="ko">노트 작성(④)에서 미팅 결과 종류별로 기록하는 위치</span>
+    <span lang="en">Where writing the note (④) records each kind of meeting outcome</span>
+  </h2>
+  <p class="lead">
+    <span lang="ko"><span class="crit">목표 자체를 바꿀 때만 GOAL.md를 고치고</span>,<br>방법 변경은 <span class="c2">미팅 노트</span>에만 남는다.</span>
+    <span lang="en"><span class="crit">Only a change to the goal itself edits GOAL.md</span>;<br>method changes stay in the <span class="c2">meeting note</span>.</span>
+  </p>
+  <div class="zoom">
+    <div class="figure" data-diagram="after-detail"></div>
+    <div class="side">
+      <div class="locator">
+        <div data-diagram="cycle" data-focus="after"></div>
+        <div class="caption"><span lang="ko">전체 주기에서 노트 작성(④)의 위치</span><span lang="en">Position of writing the note (④) in the cycle</span></div>
+      </div>
+      <ul class="points small">
+        <li><span lang="ko"><strong><span class="c1">GOAL.md</span> 수정:</strong> 문장을 교체하고,<br>이력을 쓰지 않는다</span><span lang="en"><strong>Editing <span class="c1">GOAL.md</span>:</strong> replace sentences,<br>keep no history</span></li>
+      </ul>
+    </div>
+  </div>
+  <div class="source"><span lang="ko">출처: skills/meet/SKILL.md</span><span lang="en">Source: skills/meet/SKILL.md</span></div>
+</section>
+
+<section class="slide">
+  <div class="eyebrow"><span lang="ko">질문 2 · 접근 3/4</span><span lang="en">Q2 · Approach 3/4</span></div>
+  <h2 class="title">
+    <span lang="ko">스킬이 만드는 슬라이드의 작성 규칙 (slides/RULES.md)</span>
+    <span lang="en">Writing rules for the slides the skills generate (slides/RULES.md)</span>
+  </h2>
+  <p class="lead">
+    <span lang="ko">모든 장은 번호 붙은 질문 하나에 문장 하나로 답하고,<br>수치에는 조건과 출처를 붙인다.</span>
+    <span lang="en">Every slide answers one numbered question with one sentence,<br>and numbers carry conditions and a source.</span>
+  </p>
+  <ul class="points">
+    <li><span lang="ko"><strong>장의 구성:</strong> 머리표, 명사구 제목, 한 문장 메시지, 불릿·구조도·표로 된 본문</span><span lang="en"><strong>Structure:</strong> eyebrow, noun-phrase title, one-sentence message, body of bullets, diagrams, or tables</span></li>
+    <li><span lang="ko"><strong>구조도:</strong> 논문 수준의 구조도와 부분 확대 상세도</span><span lang="en"><strong>Diagrams:</strong> paper-quality architecture diagrams, with zoomed-in details for parts</span></li>
+    <li><span lang="ko"><strong>색:</strong> 하늘색은 처음 보는 것, 빨간색은 중요한 것, c1~c4는 텍스트와 그림의 연결</span><span lang="en"><strong>Colors:</strong> sky blue for first-time concepts, red for important items, c1-c4 to link text and visuals</span></li>
+    <li><span lang="ko"><strong>언어:</strong> 영어로 쓰고, 사용자 언어가 영어가 아니면 그 언어 토글을 추가한다</span><span lang="en"><strong>Language:</strong> English, with a toggle for the user's language when it is not English</span></li>
+  </ul>
+  <div class="source"><span lang="ko">출처: slides/RULES.md</span><span lang="en">Source: slides/RULES.md</span></div>
+</section>
+
+<section class="slide">
+  <div class="eyebrow"><span lang="ko">질문 2 · 접근 4/4</span><span lang="en">Q2 · Approach 4/4</span></div>
+  <h2 class="title">
+    <span lang="ko"><span class="proj">drive-project-forward</span>의 설치 명령과 사용 순서 (Claude Code)</span>
+    <span lang="en">Install commands and order of use for <span class="proj">drive-project-forward</span> (Claude Code)</span>
+  </h2>
+  <p class="lead">
+    <span lang="ko">설치 명령 두 개를 실행한 뒤,<br>goal, 미팅 전후의 meet, wrapup 순서로 쓴다.</span>
+    <span lang="en">After two install commands,<br>the skills are used in the order goal, meet before and after each meeting, then wrapup.</span>
+  </p>
+  <ul class="points small">
+    <li><span lang="ko"><strong>설치:</strong></span><span lang="en"><strong>Install:</strong></span> <code>/plugin marketplace add JuwonHwang/drive-project-forward</code><br><code>/plugin install drive-project-forward@drive-project-forward</code></li>
+    <li><span lang="ko"><strong>시작:</strong></span><span lang="en"><strong>Start:</strong></span> <code>/drive-project-forward:goal</code> <span lang="ko">→ GOAL.md 작성</span><span lang="en">→ creates GOAL.md</span></li>
+    <li><span lang="ko"><strong>미팅마다:</strong> 미팅 전</span><span lang="en"><strong>Each meeting:</strong> before,</span> <code>/drive-project-forward:meet</code><span lang="ko">, 미팅 뒤 "summarize the meeting"</span><span lang="en">; after, "summarize the meeting"</span></li>
+    <li><span lang="ko"><strong>공유:</strong></span><span lang="en"><strong>Sharing:</strong></span> <code>/drive-project-forward:wrapup</code><span lang="ko">. 논의로 슬라이드 만들기:</span><span lang="en">. Slides from a discussion:</span> <code>/drive-project-forward:slides</code></li>
+  </ul>
+  <div class="source"><span lang="ko">출처: README.md</span><span lang="en">Source: README.md</span></div>
+</section>
+
+<section class="slide">
+  <div class="eyebrow"><span lang="ko">질문 3 · 한계</span><span lang="en">Q3 · Limitations</span></div>
+  <h2 class="title">
+    <span lang="ko"><span class="proj">drive-project-forward</span>에서 측정하거나 시험하지 않은 항목 (2026-10-29 기준)</span>
+    <span lang="en">Items not measured or tested in <span class="proj">drive-project-forward</span> (as of 2026-10-29)</span>
+  </h2>
+  <p class="lead">
+    <span lang="ko"><span class="crit">플러그인이 연구 세션에 주는 효과는 측정하지 않았다.</span></span>
+    <span lang="en"><span class="crit">The effect of the plugin on research sessions has not been measured.</span></span>
+  </p>
+  <ul class="points">
+    <li><span lang="ko"><strong>효과:</strong> 플러그인 사용 전후의 세부로 빠짐, 이른 결론, 문서 길이를 측정하지 않았다</span><span lang="en"><strong>Effect:</strong> no measurement of drift, early conclusions, or document length with and without the plugin</span></li>
+    <li><span lang="ko"><strong>호출 문구:</strong> "summarize the meeting" 같은 영어 문구로 스킬이 호출되는지 시험하지 않았다</span><span lang="en"><strong>Triggers:</strong> whether English phrases such as "summarize the meeting" invoke the skills has not been tested</span></li>
+    <li><span lang="ko"><strong>화면 캡처:</strong> 슬라이드 확인은 헤드리스 Chrome을 쓰고, Chrome이 없으면 캡처를 건너뛴다</span><span lang="en"><strong>Screenshots:</strong> the slide check uses headless Chrome; without Chrome, the screenshot step is skipped</span></li>
+  </ul>
+  <div class="source"><span lang="ko">출처: README.md. 시험하지 않은 항목은 2026-10-29 기준</span><span lang="en">Source: README.md; untested items as of 2026-10-29</span></div>
+</section>
+
+<section class="slide">
+  <div class="eyebrow"><span lang="ko">이해 확인</span><span lang="en">Understanding check</span></div>
+  <h2 class="title">
+    <span lang="ko">이 발표의 질문 세 개에 대한 답</span>
+    <span lang="en">Answers to the three questions of this talk</span>
+  </h2>
+  <p class="lead">
+    <span lang="ko">아래 세 문장이 이해한 내용과 같은지 확인한다.</span>
+    <span lang="en">Check that the three statements below match your understanding.</span>
+  </p>
+  <ul class="points">
+    <li><span lang="ko"><strong>질문 1:</strong> 세부로 빠짐, 이른 결론, 덧붙는 문서를 다루려고<br>미팅마다 이해, 결정, 기록의 순서를 고정한다</span><span lang="en"><strong>Q1:</strong> it addresses drift, early conclusions, and appended documents<br>by fixing understand, decide, record per meeting</span></li>
+    <li><span lang="ko"><strong>질문 2:</strong> goal이 <span class="c1">GOAL.md</span>를 한 번 쓰고, meet가 미팅 전 자료와 미팅 뒤 <span class="c2">노트</span>를 쓰며,<br>wrapup과 slides가 공유용 슬라이드를 만든다</span><span lang="en"><strong>Q2:</strong> goal writes <span class="c1">GOAL.md</span> once; meet writes the material before and the <span class="c2">note</span> after each meeting;<br>wrapup and slides build slides for sharing</span></li>
+    <li><span lang="ko"><strong>질문 3:</strong> 효과와 영어 호출 문구는 검증하지 않았다</span><span lang="en"><strong>Q3:</strong> the effect and the English triggers have not been verified</span></li>
+  </ul>
+</section>
+
+</main>
+<div class="counter"></div>
+<button class="langbtn" type="button" title="L"></button>
+
+<script>
+document.querySelectorAll('[data-diagram]').forEach(el => {
+  const t = document.getElementById('diagram-' + el.dataset.diagram)
+  if (!t) { el.textContent = 'missing diagram: ' + el.dataset.diagram; return }
+  el.appendChild(t.content.cloneNode(true))
+  const focus = (el.dataset.focus || '').split(',').map(s => s.trim()).filter(Boolean)
+  if (focus.length) el.querySelectorAll('[data-part]').forEach(p => {
+    if (!p.dataset.part.split(/\s+/).some(x => focus.includes(x))) p.classList.add('dim')
+  })
+})
+
+// Language switching: English plus the optional data-alt language. The initial language is chosen in the order
+// ?lang=, saved choice, English. Switch with the L key or the button at the bottom left.
+const btn = document.querySelector('.langbtn')
+const alt = document.documentElement.dataset.alt
+const langs = alt ? ['en', alt] : ['en']
+const hide = document.head.appendChild(document.createElement('style'))
+function langName(code) {
+  try { return new Intl.DisplayNames([code], { type: 'language' }).of(code) } catch { return code }
+}
+function setLang(lang) {
+  document.documentElement.dataset.lang = lang
+  document.documentElement.lang = lang
+  hide.textContent = 'body [lang]:not([lang="' + lang + '"]){display:none}'
+  const other = langs.find(l => l !== lang)
+  btn.textContent = other ? langName(other) : ''
+  try { localStorage.setItem('slides-lang', lang) } catch {}
+}
+function toggleLang() { if (alt) setLang(document.documentElement.dataset.lang === 'en' ? alt : 'en') }
+let initial = new URLSearchParams(location.search).get('lang')
+if (!initial) try { initial = localStorage.getItem('slides-lang') } catch {}
+setLang(langs.includes(initial) ? initial : 'en')
+if (alt) btn.addEventListener('click', e => { e.stopPropagation(); toggleLang() })
+else btn.hidden = true
+
+const slides = [...document.querySelectorAll('.slide')]
+const counter = document.querySelector('.counter')
+let cur = 0
+function show(i) {
+  cur = Math.max(0, Math.min(slides.length - 1, i))
+  slides.forEach((s, k) => s.classList.toggle('on', k === cur))
+  counter.textContent = (cur + 1) + ' / ' + slides.length
+  history.replaceState(null, '', location.search + '#' + (cur + 1))
+}
+addEventListener('keydown', e => {
+  if (['ArrowRight', 'PageDown', ' ', 'Enter'].includes(e.key)) show(cur + 1)
+  else if (['ArrowLeft', 'PageUp', 'Backspace'].includes(e.key)) show(cur - 1)
+  else if (e.key === 'Home') show(0)
+  else if (e.key === 'End') show(slides.length - 1)
+  else if (e.key === 'l' || e.key === 'L') toggleLang()
+})
+addEventListener('click', e => show(cur + (e.clientX > innerWidth / 2 ? 1 : -1)))
+show((parseInt(location.hash.slice(1)) || 1) - 1)
+</script>
+</body>
+</html>

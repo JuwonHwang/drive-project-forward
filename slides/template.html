@@ -1,17 +1,18 @@
 <!doctype html>
-<html lang="ko" data-lang="ko">
+<!-- data-alt: the user's language code when it is not English (e.g. "ko"). Remove it for English-only slides;
+     the toggle button is then hidden. -->
+<html lang="en" data-lang="en" data-alt="ko">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>drive-project-forward</title>
 <style>
 :root{--bg:#fff;--fg:#1b1b1b;--muted:#6b6b6b;--line:#d6d6d6;--panel:#f8f9fa;
-  /* 색의 의미: new(처음 보는 것), crit(중요한 것), c1~c4(텍스트와 시각 자료의 연결, 뜻 없음) */
+  /* Color meanings: new (shown for the first time), crit (important), c1-c4 (links text to visuals, no meaning) */
   --new:#0284c7;--crit:#dc2626;--c1:#6d28d9;--c2:#15803d;--c3:#a16207;--c4:#475569}
 html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);word-break:keep-all;
   font-family:"Pretendard","Apple SD Gothic Neo","Noto Sans KR",system-ui,sans-serif}
-/* 언어 전환: 선택하지 않은 언어의 요소를 숨긴다 */
-html[data-lang="ko"] body [lang="en"], html[data-lang="en"] body [lang="ko"]{display:none}
+/* Language switching: the script hides elements whose lang is not the selected language */
 .deck{position:fixed;inset:0;display:grid;place-items:center}
 .slide{display:none;container-type:size;box-sizing:border-box;
   width:min(100vw,177.78vh);height:min(56.25vw,100vh);padding:4.5cqh 5cqw 5.5cqh;flex-direction:column;gap:2.8cqh}
@@ -25,34 +26,37 @@ ul.points{font-size:2cqw;line-height:1.5;margin:0;padding-left:1.3em}
 ul.points li+li{margin-top:1.2cqh}
 ul.points li::marker{color:var(--muted)}
 ul.points.small{font-size:1.6cqw}
-/* 불릿과 번호 항목의 서두(라벨)는 굵게 */
+/* Bold labels at the start of bullets and numbered items */
 ul.points li strong,ol li strong{font-weight:700}
 .figure{flex:1;min-height:0;display:flex;align-items:center;justify-content:center;
   background:var(--panel);border-radius:8px;padding:2cqh 2cqw;box-sizing:border-box}
 .figure svg{width:100%;height:100%}
-/* 부분 서술: 왼쪽 확대 상세도, 오른쪽 전체 구조 속 위치 */
+/* Part description: zoomed-in detail on the left, its position in the full structure on the right */
 .zoom{flex:1;min-height:0;display:grid;grid-template-columns:1fr 34%;gap:3cqw}
 .side{display:flex;flex-direction:column;gap:2cqh;min-height:0}
 .locator{background:var(--panel);border-radius:8px;padding:1cqw}
 .locator svg{width:100%;height:auto;display:block}
 .caption{font-size:1.2cqw;color:var(--muted);margin-top:.8cqh}
 table{border-collapse:collapse;font-size:1.9cqw}
+table.small{font-size:1.45cqw}
 th,td{border-bottom:1px solid var(--line);padding:1.3cqh 2cqw;text-align:left}
 th{font-weight:600;color:var(--muted)}
 td.num{text-align:right;font-variant-numeric:tabular-nums}
-/* 텍스트 색: 뜻이 있는 색(new, crit)과 연결 색(c1~c4) */
+/* Text colors: meaningful colors (new, crit) and link colors (c1-c4) */
 span.new,span.crit,span.c1,span.c2,span.c3,span.c4,td.new,td.crit,td.c1,td.c2,td.c3,td.c4{font-weight:800}
+/* Project name: bold wherever it appears in slide text */
+span.proj{font-weight:800}
 .new{color:var(--new)} .crit{color:var(--crit)}
 .c1{color:var(--c1)} .c2{color:var(--c2)} .c3{color:var(--c3)} .c4{color:var(--c4)}
 .source{margin-top:auto;font-size:1.15cqw;color:var(--muted)}
-/* 단계적 설명: data-focus에 없는 부분을 반투명하게 가린다 */
+/* Step-by-step explanation: parts not in data-focus are made translucent */
 [data-part]{transition:opacity .25s}
 .dim{opacity:.14}
 svg text{font-family:inherit;fill:var(--fg)}
 svg .name{font-weight:700}
 svg .sub,svg .label{fill:var(--muted)}
 svg .box{fill:#fff;stroke:var(--fg);stroke-width:2}
-/* 시각 자료 색: 그룹에 텍스트와 같은 색 클래스를 붙이면 상자 테두리와 이름이 그 색, 내부가 그 색의 연한 색이 된다 */
+/* Visual colors: a group with the same color class as its text gets that color on the box border and name, and a light tint inside */
 svg g.new .box{stroke:var(--new);fill:#e0f2fe} svg g.new .name{fill:var(--new)}
 svg g.crit .box{stroke:var(--crit);fill:#fee2e2} svg g.crit .name{fill:var(--crit)}
 svg g.c1 .box{stroke:var(--c1);fill:#ede9fe} svg g.c1 .name{fill:var(--c1)}
@@ -74,16 +78,16 @@ svg .edge.opt{stroke-dasharray:8 6}
 </head>
 <body>
 
-<!-- 화살표 머리. 숨겨진 슬라이드 안에 두면 그려지지 않으므로 슬라이드 밖에 둔다. -->
+<!-- Arrowhead. Placed outside the slides because it is not drawn inside a hidden slide. -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
     <path d="M0,0 L10,5 L0,10 z" fill="#1b1b1b"/></marker></defs>
 </svg>
 
-<!-- 전체 구조도. 한 번만 정의하고 data-diagram으로 불러온다. 각 부분에 data-part를 붙인다.
-     SVG 글자는 같은 위치에 lang="ko"와 lang="en" <text>를 하나씩 둔다. -->
+<!-- Full architecture diagram. Defined once and loaded with data-diagram. Each part has data-part.
+     SVG text: one lang="en" <text> and, when data-alt is set, one <text> in that language at the same position. -->
 <template id="diagram-cycle">
-  <svg viewBox="0 0 1600 620" role="img" aria-label="drive-project-forward">
+  <svg viewBox="0 0 1600 620" role="img" aria-label="Full meeting cycle: set goal, GOAL.md, prepare slides, meeting, write note, meeting note, presentation">
     <g data-part="goal">
       <rect class="box" x="20" y="70" width="220" height="140" rx="10"/>
       <text lang="ko" class="name" x="130" y="112" text-anchor="middle" font-size="22">① 목표 작성 <tspan class="sub" font-size="16" font-weight="400">(goal)</tspan></text>
@@ -182,9 +186,9 @@ svg .edge.opt{stroke-dasharray:8 6}
   </svg>
 </template>
 
-<!-- 확대 상세도: 미팅 뒤(④) 결정 종류별로 쓰는 위치 -->
+<!-- Zoomed-in detail: where each kind of decision is recorded after the meeting (④) -->
 <template id="diagram-after-detail">
-  <svg viewBox="0 0 1000 520" role="img" aria-label="after-meeting routing">
+  <svg viewBox="0 0 1000 520" role="img" aria-label="Where each kind of meeting outcome is recorded in the meeting note and GOAL.md">
     <text lang="ko" class="label" x="20" y="50" font-size="19">미팅에서 나온 것</text>
     <text lang="en" class="label" x="20" y="50" font-size="19">What came out of the meeting</text>
     <text class="label new" x="640" y="50" text-anchor="middle" font-size="19">note.md</text>
@@ -238,8 +242,8 @@ svg .edge.opt{stroke-dasharray:8 6}
 
 <section class="slide cover">
   <div class="title">
-    <span lang="ko">drive-project-forward가 미팅 전후에 읽고 쓰는 파일</span>
-    <span lang="en">The files drive-project-forward reads and writes around a meeting</span>
+    <span lang="ko"><span class="proj">drive-project-forward</span>가 미팅 전후에 읽고 쓰는 파일</span>
+    <span lang="en">The files <span class="proj">drive-project-forward</span> reads and writes around a meeting</span>
   </div>
   <div class="sub">
     <span lang="ko">템플릿 예시 · 2026-10-28</span>
@@ -250,8 +254,8 @@ svg .edge.opt{stroke-dasharray:8 6}
 <section class="slide">
   <div class="eyebrow"><span lang="ko">이번 미팅의 질문</span><span lang="en">Questions for this meeting</span></div>
   <h2 class="title">
-    <span lang="ko">drive-project-forward의 스킬 순서와 GOAL.md 수정 조건</span>
-    <span lang="en">Skill order in drive-project-forward and when GOAL.md changes</span>
+    <span lang="ko"><span class="proj">drive-project-forward</span>의 스킬 순서와 GOAL.md 수정 조건</span>
+    <span lang="en">Skill order in <span class="proj">drive-project-forward</span> and when GOAL.md changes</span>
   </h2>
   <p class="lead">
     <span lang="ko">이번 자료는 이 플러그인이 미팅 전후에 무엇을 읽고 쓰는지,<br>그리고 어떤 결정이 <span class="c1">GOAL.md</span>를 바꾸는지 이해하는 것이 목적이다.</span>
@@ -266,8 +270,8 @@ svg .edge.opt{stroke-dasharray:8 6}
 <section class="slide">
   <div class="eyebrow"><span lang="ko">질문 1 · 동작 설명 1/2</span><span lang="en">Q1 · How it works 1/2</span></div>
   <h2 class="title">
-    <span lang="ko">drive-project-forward의 미팅 주기 전체 구조 (스킬 3개, 다음 단계가 읽는 기록 2개)</span>
-    <span lang="en">Full meeting cycle of drive-project-forward (3 skills, 2 records read by later steps)</span>
+    <span lang="ko"><span class="proj">drive-project-forward</span>의 미팅 주기 전체 구조 (스킬 3개, 다음 단계가 읽는 기록 2개)</span>
+    <span lang="en">Full meeting cycle of <span class="proj">drive-project-forward</span> (3 skills, 2 records read by later steps)</span>
   </h2>
   <p class="lead">
     <span lang="ko"><span class="new">미팅 노트</span>가 다음 미팅 자료의 리마인드가 되어 미팅이 한 주기로 이어지고,<br><span class="c1">GOAL.md</span>는 주기 밖의 기준으로 읽히다가 사용자가 목표를 조정할 때만 바뀐다.</span>
@@ -348,7 +352,7 @@ svg .edge.opt{stroke-dasharray:8 6}
 
 </main>
 <div class="counter"></div>
-<button class="langbtn" type="button" title="L">한국어 / English</button>
+<button class="langbtn" type="button" title="L"></button>
 
 <script>
 document.querySelectorAll('[data-diagram]').forEach(el => {
@@ -361,19 +365,29 @@ document.querySelectorAll('[data-diagram]').forEach(el => {
   })
 })
 
-// 언어 전환: ?lang=en|ko, 저장된 선택, 기본 ko 순서로 정한다. L 키나 왼쪽 아래 버튼으로 바꾼다.
+// Language switching: English plus the optional data-alt language. The initial language is chosen in the order
+// ?lang=, saved choice, English. Switch with the L key or the button at the bottom left.
 const btn = document.querySelector('.langbtn')
+const alt = document.documentElement.dataset.alt
+const langs = alt ? ['en', alt] : ['en']
+const hide = document.head.appendChild(document.createElement('style'))
+function langName(code) {
+  try { return new Intl.DisplayNames([code], { type: 'language' }).of(code) } catch { return code }
+}
 function setLang(lang) {
   document.documentElement.dataset.lang = lang
   document.documentElement.lang = lang
-  btn.textContent = lang === 'ko' ? 'English' : '한국어'
+  hide.textContent = 'body [lang]:not([lang="' + lang + '"]){display:none}'
+  const other = langs.find(l => l !== lang)
+  btn.textContent = other ? langName(other) : ''
   try { localStorage.setItem('slides-lang', lang) } catch {}
 }
-function toggleLang() { setLang(document.documentElement.dataset.lang === 'ko' ? 'en' : 'ko') }
+function toggleLang() { if (alt) setLang(document.documentElement.dataset.lang === 'en' ? alt : 'en') }
 let initial = new URLSearchParams(location.search).get('lang')
 if (!initial) try { initial = localStorage.getItem('slides-lang') } catch {}
-setLang(initial === 'en' ? 'en' : 'ko')
-btn.addEventListener('click', e => { e.stopPropagation(); toggleLang() })
+setLang(langs.includes(initial) ? initial : 'en')
+if (alt) btn.addEventListener('click', e => { e.stopPropagation(); toggleLang() })
+else btn.hidden = true
 
 const slides = [...document.querySelectorAll('.slide')]
 const counter = document.querySelector('.counter')

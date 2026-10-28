@@ -1,7 +1,7 @@
 {
   "name": "drive-project-forward",
   "version": "0.1.0",
-  "description": "연구 프로젝트를 목표 쪽으로 추진한다: 목표와 달성 기준(GOAL.md), 미팅 설명 자료와 미팅 노트, 공유용 발표 자료(wrapup)",
+  "description": "Keeps a research project directed at its goal: goal and success criteria (GOAL.md), explanatory meeting material and meeting notes, and presentation material for sharing (wrapup)",
   "author": {
     "name": "JuwonHwang"
   },
