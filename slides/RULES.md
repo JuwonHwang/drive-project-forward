@@ -85,6 +85,28 @@ A slide that explains one part of the full structure draws a new detailed diagra
 - The layout is `.figure` (detail) and `.side` (`.locator` and short bullets) inside `.zoom`. The 5th slide of the template is an example.
 - The slide that first shows the full structure draws the full diagram at screen width. Slides that explain parts follow the order of the structure.
 
+## Draw proposals and options
+
+Anything the material proposes that does not exist yet is drawn, not only described in words. This covers each option of a decision, a new component, new data, a new metric, and a change of plan. A table of pros and cons alone does not show what each option changes, so the reader cannot judge it.
+
+- **One panel per option, side by side.** Use `.options` with one `.option` per option. Each panel has the option label (`h3`), a diagram, and one line on what changes. The 7th and 8th slides of the template are an example.
+- **Same base in every panel.** Each panel draws the same part of the structure at the same scale and position. Only what the option changes differs between panels, so the difference is visible by comparing panels.
+- **Changed parts get the option's color.** Give option A `c1`, B `c2`, C `c3` (at most 4 options, as in `Color meanings`). The parts an option adds or changes, the option label, and that option's row in the pros-and-cons table use that color. Unchanged parts stay uncolored.
+- **Parts that do not exist yet have a dashed border.** Put `prop` on the group, as in `<g data-part="…" class="c2 prop">`. Add a legend for the dashed border on the slide.
+- **If one option keeps the current state, draw it too.** Its panel shows the current structure with nothing colored.
+- **Show a value where it decides the choice.** Example: where the loss is computed, what the target is, the size of the data, the time cost. Mark values that were not measured as estimates.
+
+What to draw depends on the kind of proposal.
+
+| Proposal | What to draw |
+|---|---|
+| Structure or training method | The part of the architecture that changes: added or replaced modules, where the loss is computed and what its target is, which modules receive gradients and which are frozen |
+| Data | One sample per data type: the input (for a time series, a small line plot of the series), the target, and the positions where the loss is computed. Mark made-up samples `illustrative` |
+| Evaluation or success criterion | The shape of the result each criterion would produce: the axes, the comparison target, and the threshold line. Mark it `illustrative`, because there is no result yet |
+| Order or schedule | A timeline per option with the steps, their order, and the estimated time of each step |
+
+Put the pros and cons on the next slide as a table. The eyebrow numbers the two slides together. Example: `Decisions needed 2a/4`, `Decisions needed 2b/4`. If the panels and a short table of 2 to 3 rows fit on one slide without shrinking the text, they may share one slide.
+
 ## Language
 
 Write all text in English. If the user's language is not English, also write every text in the user's language and add a language toggle. The user's language is the language the user writes in during the conversation.
@@ -131,6 +153,8 @@ The screen has no scrolling. If there is too much content, split the slide inste
 | List of evidence | `ul.points` (3 to 5 items, one line each) |
 | Full structure | `<template id="diagram-name">` + `.figure[data-diagram]` |
 | Part explanation | `.zoom` = detail `.figure[data-diagram="name-detail"]` + `.locator[data-focus]` inside `.side` |
+| Options of a decision, a proposal | `.options` = one `.option` per option: `h3` (label), `.opt-fig[data-diagram]`, `.caption` |
+| Part that does not exist yet | `class="prop"` on the diagram group (dashed border) |
 | Number comparison | `table`. Number cells are `td.num`. To color a cell, use the classes in `Color meanings` |
 | Table with two-line cells | `table.small` |
 | Source | `.source` |

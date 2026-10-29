@@ -39,7 +39,7 @@ Create two pieces of material.
 | Results and causes | For each result, show the candidate causes and the records that show each cause (which example, which part of which log). Attach conditions and sources to numbers, and distinguish measured values from estimates |
 | Not yet explained | Phenomena whose cause was not found, and what to look at to find it |
 | Understanding check | A few sentences stating what the user should know at the end of this meeting. This slide lets the user check that it matches their understanding |
-| Decisions needed, next plan | Only when there are any. One slide per decision, with options and pros and cons. The next plan is given per option |
+| Decisions needed, next plan | Only when there are any. For each decision, one slide that draws every option side by side, then one slide with the pros and cons. Follow `Draw proposals and options` in `slides/RULES.md`. The next plan is given per option |
 
 Write the section name in the eyebrow. Example: `How it works 2/4`.
 
@@ -55,6 +55,7 @@ Write the section name in the eyebrow. Example: `How it works 2/4`.
 - **Take examples from actual records.** Attach the source (run path, example id). When a made-up example is used, mark it `illustrative`.
 - **Attach an example or evidence to every claim.** Follow `Every claim has an example or evidence` in `slides/RULES.md`. This applies to the markdown material as well as the slides.
 - **Do not assert a single cause.** Distinguish what the records show from estimates.
+- **Draw what is proposed.** Every option, new component, new data type, or new criterion that does not exist yet is drawn as in `Draw proposals and options` in `slides/RULES.md`. In the markdown material, write for each option what the diagram shows: which parts change, where the loss is computed, one sample of the data.
 
 ## Do not omit
 

@@ -71,6 +71,15 @@ svg .edge{stroke:var(--fg);stroke-width:2;fill:none;marker-end:url(#arrow)}
 svg .cell1{fill:#4b5563}
 svg .cell0{fill:#fff;stroke:var(--fg);stroke-width:2}
 svg .edge.opt{stroke-dasharray:8 6}
+/* Options of a decision: one panel per option, side by side, same base diagram in each */
+.options{flex:1;min-height:0;display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:2cqw}
+.option{display:flex;flex-direction:column;min-height:0;background:var(--panel);border-radius:8px;padding:1.6cqh 1.4cqw}
+.option h3{font-size:1.7cqw;font-weight:800;margin:0}
+.opt-fig{flex:1;min-height:0;margin:1cqh 0}
+.opt-fig svg{width:100%;height:100%}
+.option .caption{font-size:1.35cqw;color:var(--fg);margin:0}
+/* Part that does not exist yet: dashed border */
+svg g.prop .box{stroke-dasharray:8 6}
 .counter{position:fixed;right:1.2vw;bottom:1vh;font-size:12px;color:var(--muted)}
 .langbtn{position:fixed;left:1.2vw;bottom:.8vh;font:inherit;font-size:12px;color:var(--muted);
   background:#fff;border:1px solid var(--line);border-radius:4px;padding:2px 8px;cursor:pointer}
@@ -238,6 +247,113 @@ svg .edge.opt{stroke-dasharray:8 6}
   </svg>
 </template>
 
+<!-- Options of one decision: same base (meeting, note, next slides) in each, only the option's change differs -->
+<template id="diagram-opt-a">
+  <svg viewBox="0 0 580 420" role="img" aria-label="Option A: deferred questions only in note.md (current)">
+    <g data-part="meeting">
+      <rect class="box" x="20" y="20" width="220" height="90" rx="10"/>
+      <text lang="ko" class="name" x="130" y="56" text-anchor="middle" font-size="22">③ 미팅</text>
+      <text lang="en" class="name" x="130" y="56" text-anchor="middle" font-size="22">③ Meeting</text>
+      <text lang="ko" class="sub" x="130" y="86" text-anchor="middle" font-size="17">보류한 질문이 나옴</text>
+      <text lang="en" class="sub" x="130" y="86" text-anchor="middle" font-size="17">questions deferred</text>
+    </g>
+    <path class="edge" data-part="meeting note" d="M130,110 L130,168"/>
+    <g data-part="note">
+      <rect class="box" x="20" y="170" width="220" height="90" rx="10"/>
+      <text lang="ko" class="name" x="130" y="206" text-anchor="middle" font-size="22">note.md</text>
+      <text lang="en" class="name" x="130" y="206" text-anchor="middle" font-size="22">note.md</text>
+      <text lang="ko" class="sub" x="130" y="236" text-anchor="middle" font-size="17">보류한 질문 절</text>
+      <text lang="en" class="sub" x="130" y="236" text-anchor="middle" font-size="17">Deferred questions section</text>
+    </g>
+    <path class="edge" data-part="note walk" d="M130,260 L130,318"/>
+    <g data-part="walk">
+      <rect class="box" x="20" y="320" width="220" height="90" rx="10"/>
+      <text lang="ko" class="name" x="130" y="356" text-anchor="middle" font-size="22">② 다음 자료 준비</text>
+      <text lang="en" class="name" x="130" y="356" text-anchor="middle" font-size="22">② Next slides</text>
+      <text lang="ko" class="sub" x="130" y="386" text-anchor="middle" font-size="17">직전 노트만 읽음</text>
+      <text lang="en" class="sub" x="130" y="386" text-anchor="middle" font-size="17">reads the last note only</text>
+    </g>
+  </svg>
+</template>
+
+<template id="diagram-opt-b">
+  <svg viewBox="0 0 580 420" role="img" aria-label="Option B: deferred questions also copied to an Open questions section of GOAL.md">
+    <g data-part="meeting">
+      <rect class="box" x="20" y="20" width="220" height="90" rx="10"/>
+      <text lang="ko" class="name" x="130" y="56" text-anchor="middle" font-size="22">③ 미팅</text>
+      <text lang="en" class="name" x="130" y="56" text-anchor="middle" font-size="22">③ Meeting</text>
+      <text lang="ko" class="sub" x="130" y="86" text-anchor="middle" font-size="17">보류한 질문이 나옴</text>
+      <text lang="en" class="sub" x="130" y="86" text-anchor="middle" font-size="17">questions deferred</text>
+    </g>
+    <path class="edge" data-part="meeting note" d="M130,110 L130,168"/>
+    <g data-part="note">
+      <rect class="box" x="20" y="170" width="220" height="90" rx="10"/>
+      <text lang="ko" class="name" x="130" y="206" text-anchor="middle" font-size="22">note.md</text>
+      <text lang="en" class="name" x="130" y="206" text-anchor="middle" font-size="22">note.md</text>
+      <text lang="ko" class="sub" x="130" y="236" text-anchor="middle" font-size="17">보류한 질문 절</text>
+      <text lang="en" class="sub" x="130" y="236" text-anchor="middle" font-size="17">Deferred questions section</text>
+    </g>
+    <path class="edge" data-part="note walk" d="M130,260 L130,318"/>
+    <g data-part="walk">
+      <rect class="box" x="20" y="320" width="220" height="90" rx="10"/>
+      <text lang="ko" class="name" x="130" y="356" text-anchor="middle" font-size="22">② 다음 자료 준비</text>
+      <text lang="en" class="name" x="130" y="356" text-anchor="middle" font-size="22">② Next slides</text>
+      <text lang="ko" class="sub" x="130" y="386" text-anchor="middle" font-size="17">직전 노트만 읽음</text>
+      <text lang="en" class="sub" x="130" y="386" text-anchor="middle" font-size="17">reads the last note only</text>
+    </g>
+    <g data-part="goalmd" class="c2 prop">
+      <rect class="box" x="300" y="170" width="240" height="90" rx="10"/>
+      <text lang="ko" class="name" x="420" y="206" text-anchor="middle" font-size="22">GOAL.md</text>
+      <text lang="en" class="name" x="420" y="206" text-anchor="middle" font-size="22">GOAL.md</text>
+      <text lang="ko" class="sub" x="420" y="236" text-anchor="middle" font-size="17">열린 질문 절 (새로)</text>
+      <text lang="en" class="sub" x="420" y="236" text-anchor="middle" font-size="17">Open questions (new)</text>
+    </g>
+    <path class="edge" data-part="meeting goalmd" d="M240,65 L420,65 L420,168"/>
+    <path class="edge" data-part="goalmd walk" d="M420,260 L420,365 L242,365"/>
+    <text lang="ko" class="label c2" data-part="goalmd walk" x="430" y="300" font-size="16">매 미팅 읽음</text>
+    <text lang="en" class="label c2" data-part="goalmd walk" x="430" y="300" font-size="16">read every meeting</text>
+  </svg>
+</template>
+
+<template id="diagram-opt-c">
+  <svg viewBox="0 0 580 420" role="img" aria-label="Option C: deferred questions accumulated in a separate questions.md">
+    <g data-part="meeting">
+      <rect class="box" x="20" y="20" width="220" height="90" rx="10"/>
+      <text lang="ko" class="name" x="130" y="56" text-anchor="middle" font-size="22">③ 미팅</text>
+      <text lang="en" class="name" x="130" y="56" text-anchor="middle" font-size="22">③ Meeting</text>
+      <text lang="ko" class="sub" x="130" y="86" text-anchor="middle" font-size="17">보류한 질문이 나옴</text>
+      <text lang="en" class="sub" x="130" y="86" text-anchor="middle" font-size="17">questions deferred</text>
+    </g>
+    <path class="edge" data-part="meeting note" d="M130,110 L130,168"/>
+    <g data-part="note">
+      <rect class="box" x="20" y="170" width="220" height="90" rx="10"/>
+      <text lang="ko" class="name" x="130" y="206" text-anchor="middle" font-size="22">note.md</text>
+      <text lang="en" class="name" x="130" y="206" text-anchor="middle" font-size="22">note.md</text>
+      <text lang="ko" class="sub" x="130" y="236" text-anchor="middle" font-size="17">보류한 질문 절</text>
+      <text lang="en" class="sub" x="130" y="236" text-anchor="middle" font-size="17">Deferred questions section</text>
+    </g>
+    <path class="edge" data-part="note walk" d="M130,260 L130,318"/>
+    <g data-part="walk">
+      <rect class="box" x="20" y="320" width="220" height="90" rx="10"/>
+      <text lang="ko" class="name" x="130" y="356" text-anchor="middle" font-size="22">② 다음 자료 준비</text>
+      <text lang="en" class="name" x="130" y="356" text-anchor="middle" font-size="22">② Next slides</text>
+      <text lang="ko" class="sub" x="130" y="386" text-anchor="middle" font-size="17">직전 노트만 읽음</text>
+      <text lang="en" class="sub" x="130" y="386" text-anchor="middle" font-size="17">reads the last note only</text>
+    </g>
+    <g data-part="questions" class="c3 prop">
+      <rect class="box" x="300" y="170" width="240" height="90" rx="10"/>
+      <text lang="ko" class="name" x="420" y="206" text-anchor="middle" font-size="22">questions.md</text>
+      <text lang="en" class="name" x="420" y="206" text-anchor="middle" font-size="22">questions.md</text>
+      <text lang="ko" class="sub" x="420" y="236" text-anchor="middle" font-size="17">미팅마다 누적 (새로)</text>
+      <text lang="en" class="sub" x="420" y="236" text-anchor="middle" font-size="17">grows every meeting (new)</text>
+    </g>
+    <path class="edge" data-part="meeting questions" d="M240,65 L420,65 L420,168"/>
+    <path class="edge" data-part="questions walk" d="M420,260 L420,365 L242,365"/>
+    <text lang="ko" class="label c3" data-part="questions walk" x="430" y="300" font-size="16">전체를 읽음</text>
+    <text lang="en" class="label c3" data-part="questions walk" x="430" y="300" font-size="16">read in full</text>
+  </svg>
+</template>
+
 <main class="deck">
 
 <section class="slide cover">
@@ -348,6 +464,61 @@ svg .edge.opt{stroke-dasharray:8 6}
     <li><span lang="ko"><strong>질문 1:</strong> 파일마다 쓰는 스킬이 정해져 있다</span><span lang="en"><strong>Q1:</strong> every file has a fixed writing skill</span></li>
     <li><span lang="ko"><strong>질문 2:</strong> <span class="c1">GOAL.md</span>는 사용자가 목표 자체를 조정할 때만 바뀌고, 방법 변경은 <span class="new">미팅 노트</span>에만 남는다</span><span lang="en"><strong>Q2:</strong> <span class="c1">GOAL.md</span> changes only when the user adjusts the goal; method changes stay in the <span class="new">note</span></span></li>
   </ul>
+</section>
+
+<section class="slide">
+  <div class="eyebrow"><span lang="ko">질문 2 · 정할 것 1a/1</span><span lang="en">Q2 · Decisions needed 1a/1</span></div>
+  <h2 class="title">
+    <span lang="ko">보류한 질문을 기록하는 위치의 선택지 3개 (예시)</span>
+    <span lang="en">Three options for where deferred questions are recorded (illustrative)</span>
+  </h2>
+  <p class="lead">
+    <span lang="ko">세 선택지는 미팅 → 노트 → 다음 자료 경로가 같고,<br>보류한 질문을 다음 자료 준비(②)에 전하는 파일만 다르다.</span>
+    <span lang="en">All three keep the meeting → note → next slides path;<br>they differ only in the file that carries deferred questions to the next slides (②).</span>
+  </p>
+  <div class="options">
+    <div class="option">
+      <h3><span lang="ko">A. note.md에만 (지금)</span><span lang="en">A. note.md only (current)</span></h3>
+      <div class="opt-fig" data-diagram="opt-a"></div>
+      <p class="caption"><span lang="ko">바뀌는 것 없음</span><span lang="en">No change</span></p>
+    </div>
+    <div class="option">
+      <h3 class="c2"><span lang="ko">B. GOAL.md에도 복사</span><span lang="en">B. Also copied to GOAL.md</span></h3>
+      <div class="opt-fig" data-diagram="opt-b"></div>
+      <p class="caption"><span lang="ko"><span class="c2">GOAL.md</span>에 열린 질문 절 추가</span><span lang="en">Adds an Open questions section to <span class="c2">GOAL.md</span></span></p>
+    </div>
+    <div class="option">
+      <h3 class="c3"><span lang="ko">C. questions.md에 누적</span><span lang="en">C. Accumulated in questions.md</span></h3>
+      <div class="opt-fig" data-diagram="opt-c"></div>
+      <p class="caption"><span lang="ko">새 파일 <span class="c3">questions.md</span> 추가</span><span lang="en">Adds a new file <span class="c3">questions.md</span></span></p>
+    </div>
+  </div>
+  <div class="source"><span lang="ko">점선 테두리: 아직 없는 부분. 출처: skills/meet/SKILL.md (A), B와 C는 예시</span><span lang="en">Dashed border: does not exist yet. Source: skills/meet/SKILL.md (A); B and C are illustrative</span></div>
+</section>
+
+<section class="slide">
+  <div class="eyebrow"><span lang="ko">질문 2 · 정할 것 1b/1</span><span lang="en">Q2 · Decisions needed 1b/1</span></div>
+  <h2 class="title">
+    <span lang="ko">보류한 질문 기록 위치별 장단점 (예시)</span>
+    <span lang="en">Pros and cons of each place to record deferred questions (illustrative)</span>
+  </h2>
+  <p class="lead">
+    <span lang="ko">B와 C는 오래된 질문이 다음 자료에서 빠지지 않게 하지만, 파일 하나를 더 관리해야 한다.</span>
+    <span lang="en">B and C keep old questions from dropping out of later slides, at the cost of one more file to maintain.</span>
+  </p>
+  <div class="figure">
+    <table>
+      <tr>
+        <th><span lang="ko">선택지</span><span lang="en">Option</span></th>
+        <th><span lang="ko">장점</span><span lang="en">Pros</span></th>
+        <th><span lang="ko">단점</span><span lang="en">Cons</span></th>
+      </tr>
+      <tr><td><span lang="ko">A. note.md에만</span><span lang="en">A. note.md only</span></td><td><span lang="ko">추가 구현 없음</span><span lang="en">No new code</span></td><td><span lang="ko">두 미팅 전에 보류한 질문은 읽히지 않는다</span><span lang="en">Questions deferred two meetings ago are not read</span></td></tr>
+      <tr><td class="c2"><span lang="ko">B. GOAL.md에도</span><span lang="en">B. Also GOAL.md</span></td><td><span lang="ko">매 미팅 읽는 파일에 남는다</span><span lang="en">Stays in a file read every meeting</span></td><td><span lang="ko">GOAL.md는 목표 조정 때만 고친다는 규칙과 충돌</span><span lang="en">Conflicts with editing GOAL.md only when the goal changes</span></td></tr>
+      <tr><td class="c3"><span lang="ko">C. questions.md</span><span lang="en">C. questions.md</span></td><td><span lang="ko">GOAL.md 규칙을 유지한다</span><span lang="en">Keeps the GOAL.md rule</span></td><td><span lang="ko">닫힌 질문을 지우는 규칙이 필요하다</span><span lang="en">Needs a rule for removing closed questions</span></td></tr>
+    </table>
+  </div>
+  <div class="source"><span lang="ko">출처: skills/meet/SKILL.md (GOAL.md 수정 조건). B와 C는 예시</span><span lang="en">Source: skills/meet/SKILL.md (when GOAL.md changes); B and C are illustrative</span></div>
 </section>
 
 </main>
