@@ -2,7 +2,7 @@
 
 Shared rules that `meet`, `wrapup`, and `slides` read when they build slides. The templates are in the same folder: `template.html` for meeting material (`meet`) and slides from a discussion (`slides`), and `template-wrapup.html` for presentation material (`wrapup`).
 
-Start by copying the template for the skill. Both templates have the same CSS and script. The template implements aspect-ratio fitting, keyboard and click navigation, slide numbers, and highlighting parts of a diagram. Do not change its CSS or script; fill in only the slide content and diagrams. The template content (examples describing this plugin) only shows the format, so replace all of it. This includes the `<title>` in `<head>` and the `aria-label` of every SVG. `template-wrapup.html` shows the section order of `wrapup`: questions, background, goal and success criteria, approach, limitations, understanding check.
+Start by copying the template for the skill. Both templates have the same CSS and script. The template implements aspect-ratio fitting, navigation with the keyboard and with the previous and next buttons at the bottom right, slide numbers, the cover design, and highlighting parts of a diagram. Clicking the slide itself does not change the slide. Do not change its CSS or script; fill in only the slide content and diagrams. The template content (examples describing this plugin) only shows the format, so replace all of it. This includes the `<title>` in `<head>` and the `aria-label` of every SVG. `template-wrapup.html` shows the section order of `wrapup`: questions, background, goal and success criteria, approach, limitations, understanding check.
 
 ## Slide structure
 
@@ -12,6 +12,17 @@ A slide consists of, from top to bottom, the eyebrow, title, message, and body.
 - **Title (`.title`)**: the subject of the slide as a noun phrase. Do not write it as a sentence.
 - **Message (`.lead`)**: the key message of the slide as one complete sentence. One per slide. If there are two messages, split the slide. Example: a result and the limitation of that result go on different slides.
 - **Body**: bullets, diagrams, and tables only. Bullets and numbered items start with a short label in bold with `<strong>`. Example: `<strong>Q1.</strong> …`, `<strong>Input:</strong> …`. Do not write paragraphs. The body contains only content that supports the message.
+
+## Cover
+
+The cover is the first slide and the only slide with a decoration: the dot grid on the right that the template's CSS draws. Fill in only its four parts, and add nothing else.
+
+- **Kind (`.kicker`)**: the kind of material as a short noun phrase. `Meeting material`, `Presentation`, or `Slides`.
+- **Title (`.title`)**: the subject of the material as a noun phrase, with the project name. At most three lines on the screen. If it reaches four lines, shorten it.
+- **Subtitle (`.sub`)**: one line on the scope or the audience. Example: `Divergence at learning rate 0.1 and two options for the schedule`.
+- **Meta (`.meta`)**: the date, then the duration or the audience, separated by ` · `.
+
+Do not put a message (`.lead`), bullets, a diagram, a logo, or a color class on the cover.
 
 ## The material alone shows why each slide exists
 
@@ -85,9 +96,36 @@ A slide that explains one part of the full structure draws a new detailed diagra
 - The layout is `.figure` (detail) and `.side` (`.locator` and short bullets) inside `.zoom`. The 5th slide of the template is an example.
 - The slide that first shows the full structure draws the full diagram at screen width. Slides that explain parts follow the order of the structure.
 
+## Draw new concepts
+
+A concept shown for the first time in the material (`new`) is explained with a visual, not only with a definition in words. Put the visual on the slide that introduces the concept, at least as large as the text.
+
+- **What to draw:** the concept applied to one concrete case from this project. Show its input, what it does, and its output with example values. Example: for early stopping, a val loss curve over epochs with the minimum, the 5-epoch patience window, and the stop point marked.
+- **Where it sits:** if the concept is a part of the full structure, add the position marker (`.locator`) as in `Zoom in on specific parts`.
+- **Before and after:** if the concept changes something, draw the state without it and with it side by side, with the same base drawing.
+- Color the concept `new` in both the visual and the text.
+- If the concept needs more than one visual (its mechanism and its effect), use one slide per visual.
+
+## Explain a problem step by step over several slides
+
+A problem is a situation where the method does not behave as expected: a failure, a divergence, a wrong output, a cost that is too high. Do not explain a problem on one slide. Split it into the steps below, one slide per step, each with a visual. The reader must be able to follow the problem without prior knowledge of it.
+
+| Step | Slide content | Visual |
+|---|---|---|
+| 1. Expected behavior | What should happen, under which conditions | The structure or the data path when it works as intended |
+| 2. Where it differs | The point in the structure where the observed behavior leaves the expected one | The same diagram with `data-focus` on that part, the differing part colored `crit` |
+| 3. Observed symptom | What was observed, with numbers and conditions | The actual record: a curve, a log excerpt, a table of runs, one failing example |
+| 4. Mechanism, one slide per candidate | How the problem arises, step by step. One candidate cause per slide; do not assert one cause | A zoomed-in diagram that follows one example through the step, with values at each point |
+| 5. Consequence | What the problem prevents or costs, in numbers | A comparison of the expected and the actual result |
+
+- Use the same diagram and the same colors through all the steps, so the reader sees one situation develop. Each step adds one thing to the previous slide.
+- If a step needs more than one slide, split it further. Do not compress steps to save slides.
+- The eyebrow numbers the problem slides together. Example: `Q1 · Divergence at lr 0.1 3/6`.
+- If there is no record for a step, the slide says so and the visual is marked `illustrative`. Step 4 candidates without evidence go to `Not yet explained`.
+
 ## Draw proposals and options
 
-Anything the material proposes that does not exist yet is drawn, not only described in words. This covers each option of a decision, a new component, new data, a new metric, and a change of plan. A table of pros and cons alone does not show what each option changes, so the reader cannot judge it.
+Anything the material proposes that does not exist yet is drawn, not only described in words. Use visuals as much as the content allows: a proposal slide has a diagram for every option, and the text only states what the diagram shows. This covers each option of a decision, a new component, new data, a new metric, and a change of plan. A table of pros and cons alone does not show what each option changes, so the reader cannot judge it.
 
 - **One panel per option, side by side.** Use `.options` with one `.option` per option. Each panel has the option label (`h3`), a diagram, and one line on what changes. The 7th and 8th slides of the template are an example.
 - **Same base in every panel.** Each panel draws the same part of the structure at the same scale and position. Only what the option changes differs between panels, so the difference is visible by comparing panels.
@@ -117,7 +155,7 @@ Write all text in English. If the user's language is not English, also write eve
 - SVG text puts one `<text lang="en">` and one `<text lang="<code>">` at the same coordinates. Text that is the same in both languages (`ResNet-18`, `x₁`, numbers) is written once without `lang`.
 - The two languages are translations of each other. Do not put content in only one of them.
 - If the longer language overflows a box, split the line. Capture screenshots in both languages to check.
-- Switching: the button at the bottom left or the `L` key. Adding `?lang=<code>` to the address opens that language. The last choice is saved in the browser.
+- Switching: the button at the bottom left or the `L` key. Slides change with the arrow buttons at the bottom right or the arrow keys. Adding `?lang=<code>` to the address opens that language. The last choice is saved in the browser.
 
 ## Color meanings
 
@@ -142,7 +180,7 @@ Diagrams, tables, and charts sit on a light gray background (`--panel`, `#f8f9fa
 
 ## Split slides that overflow
 
-The screen has no scrolling. If there is too much content, split the slide instead of shrinking the text. Keep the template styles as they are. The slide background is white, and color is used only as described in `Color meanings`. Do not add decorations or shadows.
+The screen has no scrolling. If there is too much content, split the slide instead of shrinking the text. Keep the template styles as they are. The slide background is white, and color is used only as described in `Color meanings`. Do not add decorations or shadows. The dot grid on the cover is the only decoration, and the template draws it.
 
 ## Components
 
@@ -158,7 +196,7 @@ The screen has no scrolling. If there is too much content, split the slide inste
 | Number comparison | `table`. Number cells are `td.num`. To color a cell, use the classes in `Color meanings` |
 | Table with two-line cells | `table.small` |
 | Source | `.source` |
-| Cover | `section.slide.cover` |
+| Cover | `section.slide.cover` = `.kicker`, `.title`, `.sub`, `.meta` |
 | Project name | `span.proj` |
 
 ## Checks
@@ -170,6 +208,7 @@ f=<file>
 grep -c '<section class="slide' "$f"              # number of slides
 grep -c 'class="title"' "$f"                        # must equal the number of slides
 grep -c 'class="lead"' "$f"                         # must equal the number of slides minus the cover
+grep -c 'class="kicker"\|class="meta"' "$f"         # 2: the cover has its kind and meta
 grep -o '<h2 class="title">[^<]*' "$f"              # check that titles are noun phrases with subject, aspect, and scope
 grep -o 'data-diagram="[^"]*"' "$f" | sort -u       # diagrams used
 grep -o 'id="diagram-[^"]*"' "$f" | sort -u         # diagrams defined

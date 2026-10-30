@@ -25,7 +25,7 @@ Ask the user the following before writing. Do not write without the answers.
 
 | Section | Content |
 |---|---|
-| Background | The background in GOAL.md. Connect it to a problem the audience has |
+| Background | The background in GOAL.md. Connect it to a problem the audience has, and explain that problem step by step over several slides with visuals, as in `Explain a problem step by step over several slides` in `slides/RULES.md` |
 | Goal and success criteria | What the project aims to achieve, and what must be shown to reach it |
 | Approach | The full architecture diagram of the method and zoomed-in diagrams of its key parts |
 | Results | Measured results only. Conditions and a source for every number |
@@ -39,6 +39,7 @@ Adjust the depth to the audience. For a business team, spend more slides on the 
 - **Attach an example or evidence to every claim.** Follow `Every claim has an example or evidence` in `slides/RULES.md`. This applies to the markdown document as well as the slides.
 - **Do not claim more than was measured.** Do not generalize beyond the measured conditions. Do not drop the limitations section.
 - **Do not present undecided items as decided.** Leave ongoing discussions out, or mark them `under review`.
+- **Draw new concepts and proposals.** Concepts the audience has not seen are drawn as in `Draw new concepts`, and proposals as in `Draw proposals and options` in `slides/RULES.md`.
 - **Match terms to the audience.** Names used only inside the project (variable names, condition names) are explained in plain words the first time they appear.
 - The slide rules are the same as for meeting material: titles are specific noun phrases, the message is one sentence on the first line of the body, architecture diagrams are paper quality, parts are zoomed in, and the slides are in English with a toggle for the user's language when it is not English.
 

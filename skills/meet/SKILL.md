@@ -47,7 +47,7 @@ Write the section name in the eyebrow. Example: `How it works 2/4`.
 
 - **Whether to explain a concept depends on whether it was already explained in this project.** Do not skip a concept because it is at graduate level or a "common term". The previous meeting material (`meetings/*-slides.md`) is the list of concepts already explained.
   - Concepts explained in previous material are recalled in one line.
-  - Concepts never explained are explained even if they are common terms: a one-line definition, the role it plays in this method, and one example from actual records. Example: "Label smoothing: a target distribution that moves part of the target probability from the correct class to the other classes. In this experiment it is used to reduce the model's overconfidence in the correct answer."
+  - Concepts never explained are explained even if they are common terms: a one-line definition, the role it plays in this method, and one example from actual records. On the slides, the concept is drawn as in `Draw new concepts` in `slides/RULES.md`. Example: "Label smoothing: a target distribution that moves part of the target probability from the correct class to the other classes. In this experiment it is used to reduce the model's overconfidence in the correct answer."
   - Do not write only a textbook definition. What it does inside this method is the point.
 - **Spend slides on new concepts and new results.** Do not explain again at length what was already explained.
 - **Define symbols, and state their meaning again when they are reused later.** Example: `k (number of candidates)`. If something can be written without a symbol, do not use a symbol.
@@ -55,6 +55,7 @@ Write the section name in the eyebrow. Example: `How it works 2/4`.
 - **Take examples from actual records.** Attach the source (run path, example id). When a made-up example is used, mark it `illustrative`.
 - **Attach an example or evidence to every claim.** Follow `Every claim has an example or evidence` in `slides/RULES.md`. This applies to the markdown material as well as the slides.
 - **Do not assert a single cause.** Distinguish what the records show from estimates.
+- **Explain a problem over several slides.** A failure, divergence, or wrong result is explained in steps (expected behavior, where it differs, observed symptom, mechanism per candidate cause, consequence), one slide per step with a visual, as in `Explain a problem step by step over several slides` in `slides/RULES.md`. In the markdown material, write one subsection per step.
 - **Draw what is proposed.** Every option, new component, new data type, or new criterion that does not exist yet is drawn as in `Draw proposals and options` in `slides/RULES.md`. In the markdown material, write for each option what the diagram shows: which parts change, where the loss is computed, one sample of the data.
 
 ## Do not omit

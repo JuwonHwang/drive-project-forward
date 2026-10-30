@@ -13,7 +13,7 @@ When research discussion continues within a single session, it tends to drift in
 | `wrapup` | Builds presentation material for people outside the project. Asks for the audience, talk length, and purpose first. | `wrapup/YYYY-MM-DD-<audience>.md`·`.html` |
 | `slides` | Builds slides from what was discussed in the current conversation. Confirms the questions and scope first. | `slides/YYYY-MM-DD-<topic>.md`·`.html` |
 
-Slides are built with the rules in `slides/RULES.md` and the templates `slides/template.html` (meeting material, slides from a discussion) and `slides/template-wrapup.html` (presentation material). The rules are: one message per slide, titles written as specific noun phrases, paper-quality architecture diagrams with zoomed-in views of parts, fixed color meanings (sky blue for concepts shown for the first time, red for important items, other colors for linking text to figures), and English text with a toggle for the user's language when it is not English.
+Slides are built with the rules in `slides/RULES.md` and the templates `slides/template.html` (meeting material, slides from a discussion) and `slides/template-wrapup.html` (presentation material). The rules are: one message per slide, titles written as specific noun phrases, paper-quality architecture diagrams with zoomed-in views of parts, a visual for every new concept and proposal, problems explained step by step over several slides, fixed color meanings (sky blue for concepts shown for the first time, red for important items, other colors for linking text to figures), and English text with a toggle for the user's language when it is not English.
 
 ## Workflow
 

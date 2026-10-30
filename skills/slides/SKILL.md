@@ -26,7 +26,8 @@ Before writing, show the following in the response and get confirmation. If the 
 - **Distinguish decided from undecided.** Write as decided only what the user decided. Write what Claude proposed and the user did not decide as a proposal or an open question.
 - **Attach an example or evidence to every claim.** Follow `Every claim has an example or evidence` in `slides/RULES.md`. This applies to the markdown document as well as the slides.
 - **Do not claim more than was shown.** Distinguish measured values from estimates. Attach conditions and a source to every number. A number whose source could not be found is not written, or is marked `source unconfirmed`.
-- **Draw proposals.** When the discussion proposed options or something that does not exist yet, draw them as in `Draw proposals and options` in `slides/RULES.md`.
+- **Draw proposals and new concepts.** When the discussion proposed options or something that does not exist yet, draw them as in `Draw proposals and options` in `slides/RULES.md`. Concepts introduced in the discussion are drawn as in `Draw new concepts`.
+- **Explain problems step by step.** When the discussion covered a problem, explain it over several slides with visuals, as in `Explain a problem step by step over several slides` in `slides/RULES.md`.
 - **Keep the user's arguments in the user's order.** When the slides present the user's view, follow the arguments and order the user gave.
 
 ## Section order
