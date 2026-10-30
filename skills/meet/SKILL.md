@@ -35,13 +35,13 @@ Create two pieces of material.
 |---|---|
 | Questions for this meeting | 1 to 3 questions this material explains. Example: "Why do 65% of runs diverge at learning rate 0.1?" |
 | Reminder of the last meeting | One slide. For each previous action item, its status (done, in progress, not done with the reason). For each success criterion, its position (met, not met with the current level, not yet measured). For the first meeting, the goal and success criteria in GOAL.md |
-| How it works | Show the full architecture diagram and zoom in on the parts related to the questions. Then pick one example from an actual run record and follow it from start to end. For each step, show the input, processing, and output |
-| Results and causes | For each result, show the candidate causes and the records that show each cause (which example, which part of which log). Attach conditions and sources to numbers, and distinguish measured values from estimates |
+| How it works | First, one slide on how the problem is abstracted: what is the input, what is the output, and which assumption makes that possible. Then show the full architecture diagram, in the order the data flows. For each part related to the questions, open with its input and output with example values, then zoom in on its computation steps. Follow one example from an actual run record from start to end, showing the input, processing, and output at each step |
+| Results and causes | For each result, show how the metric is computed on one example, why the metric or test is used, and what its value means. Then show the candidate causes and the records that show each cause (which example, which part of which log). Attach conditions and sources to numbers, and distinguish measured values from estimates |
 | Not yet explained | Phenomena whose cause was not found, and what to look at to find it |
 | Understanding check | A few sentences stating what the user should know at the end of this meeting. This slide lets the user check that it matches their understanding |
-| Decisions needed, next plan | Only when there are any. For each decision, one slide that draws every option side by side, then one slide with the pros and cons. Follow `Draw proposals and options` in `slides/RULES.md`. The next plan is given per option |
+| Decisions needed, next plan | Only when there are any. For each decision, one slide that draws every option side by side, then one slide with the pros and cons. Follow `Draw proposals and options` in `slides/RULES.md`. The next plan is given per option. When the decision is about what to improve, first list the functions with their current performance as in `Material for discussing improvements` in `slides/RULES.md` |
 
-Write the section name in the eyebrow. Example: `How it works 2/4`.
+Write the section name in the eyebrow. Example: `How it works 2/4`. Follow `Order of explanation` in `slides/RULES.md`, including section dividers when the material is long.
 
 ## How to explain
 
@@ -50,12 +50,14 @@ Write the section name in the eyebrow. Example: `How it works 2/4`.
   - Concepts never explained are explained even if they are common terms: a one-line definition, the role it plays in this method, and one example from actual records. On the slides, the concept is drawn as in `Draw new concepts` in `slides/RULES.md`. Example: "Label smoothing: a target distribution that moves part of the target probability from the correct class to the other classes. In this experiment it is used to reduce the model's overconfidence in the correct answer."
   - Do not write only a textbook definition. What it does inside this method is the point.
 - **Spend slides on new concepts and new results.** Do not explain again at length what was already explained.
-- **Define symbols, and state their meaning again when they are reused later.** Example: `k (number of candidates)`. If something can be written without a symbol, do not use a symbol.
+- **Use established terms and define them before use.** Follow `Terms and wording` in `slides/RULES.md`: established terms instead of colloquial descriptions, definitions on or before the first slide that uses a term, symbols only where needed with one meaning each, and named targets instead of words such as `we`.
 - **Do not refer to steps by number only.** Write `data augmentation (③)` instead of `③`.
 - **Take examples from actual records.** Attach the source (run path, example id). When a made-up example is used, mark it `illustrative`.
 - **Attach an example or evidence to every claim.** Follow `Every claim has an example or evidence` in `slides/RULES.md`. This applies to the markdown material as well as the slides.
 - **Do not assert a single cause.** Distinguish what the records show from estimates.
 - **Explain a problem over several slides.** A failure, divergence, or wrong result is explained in steps (expected behavior, where it differs, observed symptom, mechanism per candidate cause, consequence), one slide per step with a visual, as in `Explain a problem step by step over several slides` in `slides/RULES.md`. In the markdown material, write one subsection per step.
+- **Show how each value is obtained.** Follow `Show how each value is obtained` in `slides/RULES.md`: the computation of each metric on one example, the reason for each test, which component sets each value, the full rule of any post-processing done in this project, and how one component's output enters the next.
+- **Do not quote the conversation.** Write decisions and arguments, not the user's words, as in `Do not quote the conversation` in `slides/RULES.md`.
 - **Draw what is proposed.** Every option, new component, new data type, or new criterion that does not exist yet is drawn as in `Draw proposals and options` in `slides/RULES.md`. In the markdown material, write for each option what the diagram shows: which parts change, where the loss is computed, one sample of the data.
 
 ## Do not omit
@@ -69,7 +71,7 @@ Write the section name in the eyebrow. Example: `How it works 2/4`.
 
 1. Write the markdown material to `meetings/YYYY-MM-DD-slides.md`. The date is the meeting date.
 2. Build the slides `meetings/YYYY-MM-DD-slides.html` from the markdown material. One section of the markdown becomes several slides.
-3. Run the checks in `slides/RULES.md`. If the slides have a second language, capture screenshots in both languages and check for clipping.
+3. Run the checks in `slides/RULES.md`, including `slides/check.mjs`, which moves through every slide in every language. Fix every error it reports. Read the messages it prints in order and fix breaks in the connection between slides.
 4. Open the slides in a browser and show them to the user. Commit only when the user requests it.
 
 # Part 2. After the meeting: meeting note

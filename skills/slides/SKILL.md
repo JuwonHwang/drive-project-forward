@@ -28,14 +28,15 @@ Before writing, show the following in the response and get confirmation. If the 
 - **Do not claim more than was shown.** Distinguish measured values from estimates. Attach conditions and a source to every number. A number whose source could not be found is not written, or is marked `source unconfirmed`.
 - **Draw proposals and new concepts.** When the discussion proposed options or something that does not exist yet, draw them as in `Draw proposals and options` in `slides/RULES.md`. Concepts introduced in the discussion are drawn as in `Draw new concepts`.
 - **Explain problems step by step.** When the discussion covered a problem, explain it over several slides with visuals, as in `Explain a problem step by step over several slides` in `slides/RULES.md`.
-- **Keep the user's arguments in the user's order.** When the slides present the user's view, follow the arguments and order the user gave.
+- **Keep the user's arguments in the user's order.** When the slides present the user's view, follow the arguments and order the user gave. Write the arguments and decisions, not the user's words as quotations, as in `Do not quote the conversation` in `slides/RULES.md`. When the discussion collected statements from several people, organize them into principles, as in `Order of explanation`.
+- **Show how each value is obtained, and use established terms.** Follow `Show how each value is obtained` and `Terms and wording` in `slides/RULES.md`.
 
 ## Section order
 
 | Section | Content |
 |---|---|
 | Questions for this material | The confirmed questions |
-| Explanation | For each question, the content from the discussion that answers it. Use a full architecture diagram and zoomed-in diagrams when the discussion covered a structure |
+| Explanation | For each question, the content from the discussion that answers it, in the order of `Order of explanation` in `slides/RULES.md`: principle, then input and output with example values, then the computation. Use a full architecture diagram and zoomed-in diagrams when the discussion covered a structure. When the discussion is about what to improve, list the functions as in `Material for discussing improvements` |
 | Open questions | Questions raised in the discussion that were not answered or decided. Only when there are any |
 | Understanding check | One sentence per question on what should be known |
 
@@ -44,4 +45,4 @@ Before writing, show the following in the response and get confirmation. If the 
 1. Write the markdown document to `slides/YYYY-MM-DD-<topic>.md`. The date is today's date. `<topic>` is a short name of the subject in lowercase words joined by hyphens. Example: `slides/2026-10-29-early-stopping-rule.md`.
 2. Show the full markdown document in the response and get confirmation. Do not replace it with a summary or only a file path.
 3. Build the slides `slides/YYYY-MM-DD-<topic>.html`. Read `slides/RULES.md` in the plugin folder (`../../slides/RULES.md` relative to this skill folder) and build the slides with its rules and `slides/template.html`. Do not add content that is not in the markdown document.
-4. Run the checks in `slides/RULES.md`, open the slides in a browser, and show them to the user. Commit only when the user requests it.
+4. Run the checks in `slides/RULES.md`, including `slides/check.mjs`, and fix every error it reports. Open the slides in a browser and show them to the user. Commit only when the user requests it.

@@ -1,8 +1,8 @@
 # Slide rules
 
-Shared rules that `meet`, `wrapup`, and `slides` read when they build slides. The templates are in the same folder: `template.html` for meeting material (`meet`) and slides from a discussion (`slides`), and `template-wrapup.html` for presentation material (`wrapup`).
+Shared rules that `meet`, `wrapup`, and `slides` read when they build slides. The templates are in the same folder: `template.html` for meeting material (`meet`) and slides from a discussion (`slides`), and `template-wrapup.html` for presentation material (`wrapup`). The layout check `check.mjs` is also in this folder.
 
-Start by copying the template for the skill. Both templates have the same CSS and script. The template implements aspect-ratio fitting, navigation with the keyboard and with the previous and next buttons at the bottom right, slide numbers, the cover design, and highlighting parts of a diagram. Clicking the slide itself does not change the slide. Do not change its CSS or script; fill in only the slide content and diagrams. The template content (examples describing this plugin) only shows the format, so replace all of it. This includes the `<title>` in `<head>` and the `aria-label` of every SVG. `template-wrapup.html` shows the section order of `wrapup`: questions, background, goal and success criteria, approach, limitations, understanding check.
+Start by copying the template for the skill. Both templates have the same CSS and script. The template implements aspect-ratio fitting, navigation with the keyboard and with the previous and next buttons at the bottom right, slide numbers, the cover design, section dividers, and highlighting parts of a diagram. Clicking the slide itself does not change the slide. Do not change its CSS or script; fill in only the slide content and diagrams. The template content (examples describing this plugin) only shows the format, so replace all of it. This includes the `<title>` in `<head>` and the `aria-label` of every SVG. `template-wrapup.html` shows the section order of `wrapup`: questions, background, goal and success criteria, approach, limitations, understanding check.
 
 ## Slide structure
 
@@ -30,6 +30,28 @@ Do not put a message (`.lead`), bullets, a diagram, a logo, or a color class on 
 - Every later slide answers one question. Write the question number and section name in the eyebrow. Example: `Q1 · How it works 2/2`.
 - The message (`.lead`) states how the slide answers its question. Do not include slides that are not connected to a question.
 - At the end, put an `Understanding check` slide with one sentence per question on what should be known.
+
+## Order of explanation
+
+- **Principle before functions.** Before the slides that explain what each function or analysis does, put one slide that states how the problem is abstracted: what is treated as the input, what as the output, and which assumption reduces the problem to that form. When the source material is a set of statements from several people (team members, reviewers, clients), organize the statements into such principles. Do not list who said what.
+- **Input and output first, then the computation.** A section that explains an analysis or a function opens with a slide that defines its input and output with example values: one concrete input and the output computed from it. The following slides explain the computation steps inside, in the order they run, and each step slide shows the values of the same example at that step. Reordering slides does not satisfy this rule. The first slide of the section must define the input and output.
+- **Sections follow the data flow.** A section that produces a value comes before a section that uses it. Example: data collection and preprocessing, then the model, then the post-processing that reads the model output.
+- **Section dividers.** When the material has more than 3 sections or more than 12 slides, put a divider slide before each section. A divider is `section.slide.divider` with `.kicker` (section number and count, as in `Section 2 / 4`), `.title` (section name as a noun phrase), and `.sub` (the question the section answers). It has no eyebrow, message, or body.
+- **Adjacent slides connect.** Read the messages in slide order (`check.mjs` prints them). Each message must follow from the previous one, so that the presenter can move to the next slide with one connecting sentence. If a step between two slides is missing, add a slide. If the order breaks the connection, reorder the slides.
+
+## Material for discussing improvements
+
+When the material is for deciding what to improve, list the functions the method needs, and report the current state of each function on its own slide or table row with the following items.
+
+| Item | Content |
+|---|---|
+| What it does | Input, output, and the computation, in one or two lines |
+| Example | One actual input and the output the function produced for it |
+| Assumptions | Conditions under which the function works as described |
+| Current performance | Measured values with the metric, conditions, sample size, and source |
+| Not measured | Aspects of the function that have no measurement yet |
+
+A function without a measurement is listed with `not measured` in the current performance. Do not omit it.
 
 ## Break long sentences at units of meaning
 
@@ -62,6 +84,18 @@ A **title** states the subject, the aspect, and the scope. The scope is the data
 
 **Numbers** carry conditions (model, number of seeds, sample size) and a source. Write the source in `.source` as the path of the evidence file or a paper. Values that were not measured are marked as estimates.
 
+**Methods and assumptions** are described specifically enough that the reader knows what is computed from what, with which parameter values. Example: `drops samples whose confidence is below 0.3` instead of `filters low-quality samples`.
+
+## Show how each value is obtained
+
+- **Metrics with their computation.** Do not show only the value of a metric. Show its definition, then the computation on one example with actual numbers, then the result. Example: `accuracy = correct predictions / all predictions = 410 / 500 = 0.82 (val split, seed 0)`.
+- **Why a test or metric is used.** For each statistical test and metric, state which question it answers and what its result means, including what it does not show. Example: a t-test p-value below 0.05 shows that the mean difference is unlikely under no difference; it does not show the size of the difference.
+- **Evaluation matches the purpose of the project.** Choose the evaluation by how the output is used. If the output is used to rank or recommend items, evaluate the ranking (for example, whether the item chosen afterward is in the top k), not only the error of each predicted value.
+- **The source of each value is marked.** In a table or diagram that shows model outputs, mark for each column or value which component sets it: the model, a fixed rule, the input data, or a manual setting. Do not place values set by a rule or a lookup table next to model outputs in a way that reads as model output. Example: in a table of a classifier's predicted class and an action chosen by a fixed rule from that class, label the action column `rule (from predicted class)`.
+- **Processing done in this project is shown in full.** For post-processing, filtering, calibration, or any rule the project added, show the rule, its threshold values, the values before and after, and at least one case taken from records.
+- **Connections between components are drawn.** When the output of one model or step is the input of the next, draw the connection: the form of the output (shape, unit, example values) and how the next step uses it.
+- **Facts about people and organizations are checked.** Who agreed, requested, or decided something with whom is checked against the original document, and that document is the source.
+
 ## Every claim has an example or evidence
 
 A claim is a message or bullet that states a fact, a cause, an evaluation, or a comparison. Attach an example or evidence to every claim, on the same slide.
@@ -71,6 +105,22 @@ A claim is a message or bullet that states a fact, a cause, an evaluation, or a 
 - A document that only states the claim, such as a README sentence, is the source of the claim, not its evidence. Write it as the source and attach evidence separately.
 - If no example or evidence can be found, do not write the claim, or mark it `no evidence` and put it in `Not yet explained` (`Limitations` for presentation material).
 - Do not attach evidence that shows something else. The evidence must show the claim under the conditions stated in the claim.
+- Before saving, go through every message and every claim bullet, and confirm its evidence on the same slide. Remove sentences without evidence.
+
+## Terms and wording
+
+- **Use established terms.** Even in a plain explanation, use the term defined in the field, not a colloquial description. Example: `variance across seeds`, not `luck of the run`.
+- **Define terms the reader may not know.** If a term may be unfamiliar to the audience, keep the established term and define it in plain words the first time it appears. Do not replace it with a vague everyday word. Example: `local minimum: a point where the loss is lower than at all nearby points`, not `a dip`.
+- **Define a concept on or before the slide that first uses it.** A slide may not use a concept that a later slide defines.
+- **Use symbols only where they are needed.** If something can be written without a symbol, do not use one. One symbol has one meaning in the whole material. When a symbol is reused on a later slide, state its meaning again. Example: `k (number of candidates)`.
+- **Name the target.** Do not use words whose target is unclear, such as `we`, `the number`, `the data`. Write which people, samples, or values are meant. Example: `the 40 evaluation samples` instead of `we`, `number of diverged runs` instead of `the number`.
+- **Use standard expressions of the language.** Do not coin words or attach suffixes in ways not found in standard usage. If a phrase sounds coined, rewrite it with an ordinary construction.
+- **Write sentences with one reading.** Check the scope of modifiers, negations, and `and`/`or`. If a sentence can be read in two ways, rewrite it.
+- **Rows of a comparison table are comparable.** Each row is the same kind of item, measured with the same unit under the same conditions. Do not mix kinds, such as methods and datasets, in the rows of one table.
+
+## Do not quote the conversation
+
+Do not put the user's words from the conversation on slides as quotations, and do not attribute statements to the user. Write only the content: the decision, the argument, or the requirement.
 
 ## Draw architecture diagrams at paper quality
 
@@ -85,7 +135,21 @@ A diagram that shows a structure is detailed enough to be used as a figure in a 
 
 Give each diagram's `<svg>` an `aria-label` that states what the diagram shows, in English. Example: `aria-label="Full training loop: data loading, augmentation, training step, stop decision"`. Screen readers read this text in place of the figure. Do not put the plugin name or the author in it.
 
-Define each diagram once in `<template id="diagram-name">`. Put `data-part="name"` on the `<g>` of each component. On an arrow or label that connects two parts, write both names separated by a space (`data-part="gate val"`). The same structure uses the same diagram on every slide.
+Define each diagram once in `<template id="diagram-name">`. Put `data-part="name"` on the `<g>` of each component. On an arrow or label that connects two parts, write both names separated by a space (`data-part="gate val"`). The same structure uses the same diagram on every slide, as in `Keep repeated diagrams consistent`.
+
+## Keep repeated diagrams consistent
+
+When several slides draw the same subject (the same structure, process, example, or chart), the reader compares them and treats every difference as meaningful. Keep the following the same in every drawing of that subject, including zoomed-in details, position markers, option panels, problem steps, and before-and-after pairs.
+
+- **Source.** Load the drawing from one `<template>` with `data-diagram`. Do not copy the SVG into each slide. If a slide needs a variant, define it as a separate template that starts from a copy of the base and changes only what the slide adds.
+- **Layout.** Each component keeps its position, size, and shape, and the data moves in the same direction (left to right, or top to bottom). A component that appears in two drawings is in the same place relative to the others.
+- **Names and numbers.** A component has one name and one step number (①②…) in every drawing. Arrow labels name the same data with the same words.
+- **Colors.** A component keeps its color class on every slide, as in `Color meanings`. A slide does not reuse that color for another component.
+- **Example values.** When drawings follow one example, they show the same example with the same values at each step. A value that a step changes is shown before and after that step.
+- **Charts.** Charts of the same quantity use the same axes, units, axis ranges, scale (linear or log), and series order and colors, so that heights and positions can be compared across slides.
+- **Symbols and legends.** A symbol, line style, or marker means the same thing in every drawing, and the legend sits in the same place.
+
+Only what the slide is about differs from the previous drawing: an added part, a highlighted part (`data-focus`), a changed value, or an option's change. State that difference in the message or the caption. If the subject itself changed (for example, the structure was revised between meetings), say so on the slide instead of silently drawing the new version.
 
 ## Zoom in on specific parts
 
@@ -105,6 +169,8 @@ A concept shown for the first time in the material (`new`) is explained with a v
 - **Before and after:** if the concept changes something, draw the state without it and with it side by side, with the same base drawing.
 - Color the concept `new` in both the visual and the text.
 - If the concept needs more than one visual (its mechanism and its effect), use one slide per visual.
+- **Draw outputs on what they refer to.** When an output refers to a position, an item, or a part of the input, draw it on that input. Examples: detected points on the input image, a recommended location on a map of the area, a score per item as a bar chart over the items.
+- The same applies to how a method works: show its mechanism on one example with a visual, not only in words.
 
 ## Explain a problem step by step over several slides
 
@@ -118,7 +184,7 @@ A problem is a situation where the method does not behave as expected: a failure
 | 4. Mechanism, one slide per candidate | How the problem arises, step by step. One candidate cause per slide; do not assert one cause | A zoomed-in diagram that follows one example through the step, with values at each point |
 | 5. Consequence | What the problem prevents or costs, in numbers | A comparison of the expected and the actual result |
 
-- Use the same diagram and the same colors through all the steps, so the reader sees one situation develop. Each step adds one thing to the previous slide.
+- Use the same diagram and the same colors through all the steps, as in `Keep repeated diagrams consistent`, so the reader sees one situation develop. Each step adds one thing to the previous slide.
 - If a step needs more than one slide, split it further. Do not compress steps to save slides.
 - The eyebrow numbers the problem slides together. Example: `Q1 · Divergence at lr 0.1 3/6`.
 - If there is no record for a step, the slide says so and the visual is marked `illustrative`. Step 4 candidates without evidence go to `Not yet explained`.
@@ -197,6 +263,7 @@ The screen has no scrolling. If there is too much content, split the slide inste
 | Table with two-line cells | `table.small` |
 | Source | `.source` |
 | Cover | `section.slide.cover` = `.kicker`, `.title`, `.sub`, `.meta` |
+| Section divider | `section.slide.divider` = `.kicker` (`Section 2 / 4`), `.title` (section name), `.sub` (question of the section) |
 | Project name | `span.proj` |
 
 ## Checks
@@ -206,9 +273,10 @@ After building, check the following.
 ```bash
 f=<file>
 grep -c '<section class="slide' "$f"              # number of slides
+grep -c 'class="slide divider"' "$f"                # number of section dividers
 grep -c 'class="title"' "$f"                        # must equal the number of slides
-grep -c 'class="lead"' "$f"                         # must equal the number of slides minus the cover
-grep -c 'class="kicker"\|class="meta"' "$f"         # 2: the cover has its kind and meta
+grep -c 'class="lead"' "$f"                         # must equal the number of slides minus the cover and the dividers
+grep -c 'class="meta"' "$f"                         # 1: the cover has its meta
 grep -o '<h2 class="title">[^<]*' "$f"              # check that titles are noun phrases with subject, aspect, and scope
 grep -o 'data-diagram="[^"]*"' "$f" | sort -u       # diagrams used
 grep -o 'id="diagram-[^"]*"' "$f" | sort -u         # diagrams defined
@@ -217,7 +285,17 @@ grep -o '<title>[^<]*' "$f"                          # title of this material, n
 grep -o 'aria-label="[^"]*"' "$f"                    # each states what its diagram shows
 ```
 
-If a browser is available, capture each slide headlessly and check for clipping, overlap, and text size. Save the screenshots inside the working folder.
+Then run the layout check in this folder. It needs Node 22 or later and Chrome.
+
+```bash
+node <plugin folder>/slides/check.mjs "$f"
+```
+
+It opens the slides in headless Chrome, moves to each slide with the template's `show(i)`, and repeats this for each language with `setLang`. For every slide it reports content outside the slide or outside its figure, panel, or table, the message when it has more than 2 lines, the cover title when it has more than 3 lines, and messages, titles, and bullets that break where no `<br>` is set. It prints the messages in slide order for the connection check in `Order of explanation`, and the number of slide views it checked. It exits with 1 on an error.
+
+- Fix every error, and fix every warning about an unintended break as in `Break long sentences at units of meaning`.
+- Confirm that the number of checked views equals the number of slides times the number of languages. A check that does not move through the slides inspects only the first slide and reports nothing for the others. Do not write a separate check script; if `check.mjs` cannot run, say so to the user instead of reporting that the slides have no problems.
+- `check.mjs` does not judge whether a diagram is legible. Capture screenshots of slides with diagrams, in each language, and look at them. Save the screenshots inside the working folder.
 
 ```bash
 "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless --hide-scrollbars \

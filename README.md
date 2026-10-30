@@ -13,7 +13,7 @@ When research discussion continues within a single session, it tends to drift in
 | `wrapup` | Builds presentation material for people outside the project. Asks for the audience, talk length, and purpose first. | `wrapup/YYYY-MM-DD-<audience>.md`·`.html` |
 | `slides` | Builds slides from what was discussed in the current conversation. Confirms the questions and scope first. | `slides/YYYY-MM-DD-<topic>.md`·`.html` |
 
-Slides are built with the rules in `slides/RULES.md` and the templates `slides/template.html` (meeting material, slides from a discussion) and `slides/template-wrapup.html` (presentation material). The rules are: one message per slide, titles written as specific noun phrases, paper-quality architecture diagrams with zoomed-in views of parts, a visual for every new concept and proposal, problems explained step by step over several slides, fixed color meanings (sky blue for concepts shown for the first time, red for important items, other colors for linking text to figures), and English text with a toggle for the user's language when it is not English.
+Slides are built with the rules in `slides/RULES.md` and the templates `slides/template.html` (meeting material, slides from a discussion) and `slides/template-wrapup.html` (presentation material). The rules are: one message per slide, titles written as specific noun phrases, paper-quality architecture diagrams with zoomed-in views of parts, a visual for every new concept and proposal, problems explained step by step over several slides, fixed color meanings (sky blue for concepts shown for the first time, red for important items, other colors for linking text to figures), English text with a toggle for the user's language when it is not English, repeated diagrams of the same subject kept the same in layout, names, colors, example values, and chart axes, an order of explanation (principle, then input and output with example values, then the computation, with sections in data-flow order), metrics shown with their computation on one example, and established terms defined before use. `slides/check.mjs` moves through every slide in every language in headless Chrome and reports content outside the slide, messages longer than two lines, and unintended line breaks.
 
 ## Workflow
 
@@ -38,7 +38,7 @@ Run the following in Claude Code:
 /plugin install drive-project-forward@drive-project-forward
 ```
 
-The screenshot step of slide verification uses headless Chrome. If Chrome is not installed, the screenshot step is skipped.
+Slide verification (`slides/check.mjs` and screenshots) uses Node 22 or later and headless Chrome. If they are not installed, the skills report that the layout was not checked.
 
 ## License
 
