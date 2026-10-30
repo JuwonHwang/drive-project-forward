@@ -155,7 +155,7 @@ Write all text in English. If the user's language is not English, also write eve
 - SVG text puts one `<text lang="en">` and one `<text lang="<code>">` at the same coordinates. Text that is the same in both languages (`ResNet-18`, `x₁`, numbers) is written once without `lang`.
 - The two languages are translations of each other. Do not put content in only one of them.
 - If the longer language overflows a box, split the line. Capture screenshots in both languages to check.
-- Switching: the button at the bottom left or the `L` key. Slides change with the arrow buttons at the bottom right or the arrow keys. Adding `?lang=<code>` to the address opens that language. The last choice is saved in the browser.
+- Switching: the button at the bottom left or the `L` key. Slides change with the arrow buttons at the bottom right or the arrow keys. Slides open in the user's language by default. Adding `?lang=<code>` to the address opens that language. The last choice is saved in the browser and takes precedence over the default.
 
 ## Color meanings
 

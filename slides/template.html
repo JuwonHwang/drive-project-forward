@@ -564,7 +564,7 @@ document.querySelectorAll('[data-diagram]').forEach(el => {
 })
 
 // Language switching: English plus the optional data-alt language. The initial language is chosen in the order
-// ?lang=, saved choice, English. Switch with the L key or the button at the bottom left.
+// ?lang=, saved choice, data-alt language, English. Switch with the L key or the button at the bottom left.
 const btn = document.querySelector('.langbtn')
 const alt = document.documentElement.dataset.alt
 const langs = alt ? ['en', alt] : ['en']
@@ -578,12 +578,17 @@ function setLang(lang) {
   hide.textContent = 'body [lang]:not([lang="' + lang + '"]){display:none}'
   const other = langs.find(l => l !== lang)
   btn.textContent = other ? langName(other) : ''
-  try { localStorage.setItem('slides-lang', lang) } catch {}
 }
-function toggleLang() { if (alt) setLang(document.documentElement.dataset.lang === 'en' ? alt : 'en') }
+// Only an explicit switch is saved, so the default stays the data-alt language until the viewer changes it.
+function toggleLang() {
+  if (!alt) return
+  const lang = document.documentElement.dataset.lang === 'en' ? alt : 'en'
+  setLang(lang)
+  try { localStorage.setItem('slides-lang-choice', lang) } catch {}
+}
 let initial = new URLSearchParams(location.search).get('lang')
-if (!initial) try { initial = localStorage.getItem('slides-lang') } catch {}
-setLang(langs.includes(initial) ? initial : 'en')
+if (!initial) try { initial = localStorage.getItem('slides-lang-choice') } catch {}
+setLang(langs.includes(initial) ? initial : (alt || 'en'))
 if (alt) btn.addEventListener('click', toggleLang)
 else btn.hidden = true
 
